@@ -1,14 +1,14 @@
 package util
 
-// When hasIntersection, we should have distance >= 0
+// When HasIntesection, we should have Distance >= 0
 type IntersectRes struct {
-	hasIntersection bool
-	distance        float64
-	position        Vector
+	HasIntersection bool
+	Distance        float64
+	Position        Vector
 }
 
 func (I1 IntersectRes) Update(I2 IntersectRes) {
-	if !I1.hasIntersection || I2.hasIntersection && I2.distance < I1.distance {
+	if !I1.HasIntersection || I2.HasIntersection && I2.Distance < I1.Distance {
 		I1 = I2
 	}
 }

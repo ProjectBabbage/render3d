@@ -1,16 +1,24 @@
 package render
 
-import "github.com/veandco/go-sdl2/sdl"
+import (
+	"broengine/config"
+	"fmt"
+
+	"github.com/veandco/go-sdl2/sdl"
+)
 
 // TODO : prendre un screen
-func render() {
+func Rendering(screen *Screen) {
 	if err := sdl.Init(sdl.INIT_EVERYTHING); err != nil {
 		panic(err)
 	}
 	defer sdl.Quit()
 
-	window, err := sdl.CreateWindow("test", sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED,
-		800, 600, sdl.WINDOW_SHOWN)
+	window, err := sdl.CreateWindow(
+		"test", sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED,
+		config.PixelsWidth, config.PixelsHeight,
+		sdl.WINDOW_SHOWN,
+	)
 	if err != nil {
 		panic(err)
 	}
@@ -20,26 +28,21 @@ func render() {
 	if err != nil {
 		panic(err)
 	}
+
 	surface.FillRect(nil, 0)
+	rect := sdl.Rect{X: 0, Y: 0, W: 800, H: 600}
+	surface.FillRect(&rect, 0xffffffff)
 
-	rect := sdl.Rect{0, 0, 800, 600}
-	surface.FillRect(&rect, 0x00000000)
-
+	var i int
+	var j int
+	for i = 0; i < config.PixelsWidth; i++ {
+		for j = 0; j < config.PixelsHeight; j++ {
+			var pixel = screen.Pixels[i][j]
+			fmt.Println(pixel)
+			surface.Set(i, j, pixel)
+		}
+	}
 	window.UpdateSurface()
-
-	rend, err := window.GetRenderer()
-	rend.SetDrawColor(255, 255, 0, 0)
-	// TODO : utiliser ce screen ici
-	// var i int32 = 0
-	// var j int32 = 0
-	// for i = 0; i < 100; i++ {
-	// 	for j = 0; j < 100; j++ {
-	// 		rend.SetDrawColor(uint8(2*i), uint8(2*j), 0, 0)
-	// 		rend.DrawPoint(300+i, 300+j)
-
-	// 	}
-	// }
-	rend.Present()
 
 	running := true
 	for running {

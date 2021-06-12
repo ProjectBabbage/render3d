@@ -2,8 +2,9 @@ package main
 
 import (
 	. "broengine/config"
+	"broengine/render"
 	. "broengine/util"
-	"fmt"
+	"image/color"
 )
 
 func main() {
@@ -11,15 +12,21 @@ func main() {
 	p2 := Vector{-15, -30, 200}
 	p3 := Vector{40, -10, 200}
 	n := Vector{0, 0, 1}
-	t := Triangle{p1, p2, p3, n}
+	t := NewTriangle(p1, p2, p3, n)
 
 	scene := SurfaceFromSurfaces([]Surface{t})
 
-	for i := Lx; i <= Hx; i++ {
-		for j := Ly; j <= Hy; j++ {
-			point := scene.Intersect(Ray{Eye, Pxy(i, j)})
-			fmt.Println(point)
+	var screen = new(render.Screen)
+
+	for i := Lx; i < Hx; i++ {
+		for j := Ly; j < Hy; j++ {
+			point := scene.Intersect(NewRay(Eye, Pxy(i, j)))
+			var pixelColor = color.Black
+			if point.HasIntersection {
+				pixelColor = color.White
+			}
+			screen.FillPixel(i, j, pixelColor)
 		}
 	}
-	// render()
+	render.Rendering(screen)
 }
