@@ -5,6 +5,7 @@ import (
 )
 
 // Eye is at origin
+var Eye = Vector{0, 0, 0}
 
 // z-position of the screen
 const D float64 = 100

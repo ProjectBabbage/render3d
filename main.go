@@ -15,7 +15,7 @@ func main() {
 
 	for i := Lx; i <= Hx; i++ {
 		for j := Ly; j <= Hy; j++ {
-			point := t.Intersect(Pxy(i, j))
+			point := t.Intersect(Ray{Eye, Pxy(i, j)})
 			fmt.Println(point)
 		}
 	}

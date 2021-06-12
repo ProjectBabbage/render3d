@@ -9,8 +9,12 @@ type Vector struct {
 	X, Y, Z float64
 }
 
+func (v Vector) Norm() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y + v.Z*v.Z)
+}
+
 func (v Vector) Normalize() Vector {
-	n := math.Sqrt(v.X*v.X + v.Y*v.Y + v.Z*v.Z)
+	n := v.Norm()
 	x := v.X / n
 	y := v.Y / n
 	z := v.Z / n
