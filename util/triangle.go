@@ -36,7 +36,7 @@ func (t Triangle) contains(p Vector) bool {
 
 func (t Triangle) projection(v Vector) Vector {
 	n := t.N.Normalize()
-	return v.Minus(n.Dilate(v.ProdScal(n)))
+	return v.Minus(n.Dilate(v.Minus(t.P1).ProdScal(n)))
 }
 
 func (t Triangle) Intersect(v Vector) Inter {

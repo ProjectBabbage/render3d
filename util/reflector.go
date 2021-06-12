@@ -8,4 +8,5 @@ type Inter struct {
 type Reflector interface {
 	Intersect(Vector) Inter
 	Translate(Vector)
+	Print()
 }
