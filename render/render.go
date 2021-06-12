@@ -1,20 +1,24 @@
 package render
 
 import (
-	"image/color"
+	"broengine/config"
+	"fmt"
 
 	"github.com/veandco/go-sdl2/sdl"
 )
 
 // TODO : prendre un screen
-func Rendering() {
+func Rendering(screen *Screen) {
 	if err := sdl.Init(sdl.INIT_EVERYTHING); err != nil {
 		panic(err)
 	}
 	defer sdl.Quit()
 
-	window, err := sdl.CreateWindow("test", sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED,
-		800, 600, sdl.WINDOW_SHOWN)
+	window, err := sdl.CreateWindow(
+		"test", sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED,
+		config.PixelsWidth, config.PixelsHeight,
+		sdl.WINDOW_SHOWN,
+	)
 	if err != nil {
 		panic(err)
 	}
@@ -29,16 +33,17 @@ func Rendering() {
 	rect := sdl.Rect{X: 0, Y: 0, W: 800, H: 600}
 	surface.FillRect(&rect, 0xffffffff)
 
-	// TODO : utiliser ce screen ici
-	var i int = 0
-	var j int = 0
-	for i = 0; i < 100; i++ {
-		for j = 0; j < 100; j++ {
+	var i int
+	var j int
+	for i = 0; i < config.PixelsWidth; i++ {
+		for j = 0; j < config.PixelsHeight; j++ {
 			// rend.SetDrawColor(uint8(2*i), uint8(2*j), 0, 0)
-			surface.Set(300+i, 300+j, color.RGBA{uint8(2 * i), uint8(2 * j), 0, 0})
-			window.UpdateSurface()
+			var pixel = screen.Pixels[i][j]
+			fmt.Println(pixel)
+			surface.Set(i, j, pixel)
 		}
 	}
+	window.UpdateSurface()
 
 	running := true
 	for running {

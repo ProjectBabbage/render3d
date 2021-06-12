@@ -4,28 +4,10 @@ import (
 	. "broengine/config"
 	"broengine/render"
 	. "broengine/util"
-	"fmt"
-
-	"github.com/veandco/go-sdl2/sdl"
+	"image/color"
 )
 
 func main() {
-	render.Rendering()
-
-	running := true
-	for running {
-		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
-			switch event.(type) {
-			case *sdl.QuitEvent:
-				println("Quit")
-				running = false
-				break
-			}
-		}
-	}
-}
-
-func testIntesection() {
 	p1 := Vector{20, 20, 200}
 	p2 := Vector{-15, -30, 200}
 	p3 := Vector{40, -10, 200}
@@ -34,10 +16,20 @@ func testIntesection() {
 
 	scene := SurfaceFromSurfaces([]Surface{t})
 
-	for i := Lx; i <= Hx; i++ {
-		for j := Ly; j <= Hy; j++ {
+	var screen = new(render.Screen)
+
+	for i := Lx; i < Hx; i++ {
+		for j := Ly; j < Hy; j++ {
 			point := scene.Intersect(Ray{Eye, Pxy(i, j)})
-			fmt.Println(point)
+			var pixelColor = color.Black
+			if point.HasIntesection {
+				pixelColor = color.White
+			}
+			screen.FillPixel(i, j, pixelColor)
 		}
+	}
+	render.Rendering(screen)
+	for i := 0; i < len(screen.Pixels); i++ {
+
 	}
 }

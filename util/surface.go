@@ -1,10 +1,10 @@
 package util
 
-// When hasIntersection, we should have distance >= 0
+// When HasIntesection, we should have Distance >= 0
 type IntersectRes struct {
-	hasIntersection bool
-	distance        float64
-	position        Vector
+	HasIntesection bool
+	Distance       float64
+	Position       Vector
 }
 
 type Surface interface {
@@ -21,10 +21,10 @@ func (s scene) Intersect(r Ray) IntersectRes {
 	res := IntersectRes{false, 0, Vector{0, 0, 0}}
 	for _, surf := range s.support {
 		I := surf.Intersect(r)
-		if I.hasIntersection && (!res.hasIntersection || res.hasIntersection && I.distance < res.distance) {
-			res.hasIntersection = I.hasIntersection
-			res.distance = I.distance
-			res.position = I.position
+		if I.HasIntesection && (!res.HasIntesection || res.HasIntesection && I.Distance < res.Distance) {
+			res.HasIntesection = I.HasIntesection
+			res.Distance = I.Distance
+			res.Position = I.Position
 		}
 	}
 	return res
