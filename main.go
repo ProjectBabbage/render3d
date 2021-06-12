@@ -2,11 +2,30 @@ package main
 
 import (
 	. "broengine/config"
+	"broengine/render"
 	. "broengine/util"
 	"fmt"
+
+	"github.com/veandco/go-sdl2/sdl"
 )
 
 func main() {
+	render.Rendering()
+
+	running := true
+	for running {
+		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
+			switch event.(type) {
+			case *sdl.QuitEvent:
+				println("Quit")
+				running = false
+				break
+			}
+		}
+	}
+}
+
+func testIntesection() {
 	p1 := Vector{20, 20, 200}
 	p2 := Vector{-15, -30, 200}
 	p3 := Vector{40, -10, 200}
@@ -21,5 +40,4 @@ func main() {
 			fmt.Println(point)
 		}
 	}
-	// render()
 }
