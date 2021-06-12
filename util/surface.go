@@ -1,12 +1,12 @@
 package util
 
-type Inter struct {
+type IntersectRes struct {
 	hasIntersection bool
 	position        Vector
 }
 
-type Reflector interface {
-	Intersect(Vector) Inter
+type Surface interface {
+	Intersect(Vector) IntersectRes
 	Translate(Vector)
 	Print()
 }

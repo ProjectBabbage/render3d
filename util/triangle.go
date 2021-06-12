@@ -39,10 +39,10 @@ func (t Triangle) projection(v Vector) Vector {
 	return v.Minus(n.Dilate(v.Minus(t.P1).ProdScal(n)))
 }
 
-func (t Triangle) Intersect(v Vector) Inter {
+func (t Triangle) Intersect(v Vector) IntersectRes {
 	p := t.projection(v)
 	b := t.contains(p)
-	return Inter{b, p}
+	return IntersectRes{b, p}
 }
 
 func (t Triangle) Translate(v Vector) {
