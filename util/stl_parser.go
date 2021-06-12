@@ -1,9 +1,8 @@
 package util
 
 import (
-	"log"
-
 	"github.com/hschendel/stl"
+	"log"
 )
 
 // Get the Triangles from a .stl file.
@@ -22,12 +21,11 @@ func ParseStl(filepath string) []Triangle {
 }
 
 func convertTriangle(t stl.Triangle) Triangle {
-	return Triangle{
-		P1: convertVector(t.Vertices[0]),
-		P2: convertVector(t.Vertices[1]),
-		P3: convertVector(t.Vertices[2]),
-		N:  convertVector(t.Normal),
-	}
+	return NewTriangle(
+		convertVector(t.Vertices[0]),
+		convertVector(t.Vertices[1]),
+		convertVector(t.Vertices[2]),
+		convertVector(t.Normal))
 }
 
 func convertVector(v stl.Vec3) Vector {
