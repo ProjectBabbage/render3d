@@ -6,8 +6,8 @@ type Ray struct {
 	direction Vector
 }
 
-func NewRay(origin, direction Vector) Ray {
-	return Ray{origin, direction.Normalize()}
+func NewRay(o, d Vector) Ray {
+	return Ray{o, d.Normalize()}
 }
 
 func (r Ray) Origin() Vector {
