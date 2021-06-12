@@ -23,7 +23,7 @@ func render() {
 	surface.FillRect(nil, 0)
 
 	rect := sdl.Rect{0, 0, 800, 600}
-	surface.FillRect(&rect, 0xffffffff)
+	surface.FillRect(&rect, 0x00000000)
 
 	window.UpdateSurface()
 
