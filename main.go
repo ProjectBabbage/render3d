@@ -11,7 +11,7 @@ func main() {
 	p1 := Vector{20, 20, 200}
 	p2 := Vector{-15, -30, 200}
 	p3 := Vector{40, -10, 200}
-	n := Vector{0, 0, 1}
+	n := Vector{0, 0, -1}
 	t := NewTriangle(p1, p2, p3, n)
 
 	scene := SurfaceFromSurfaces([]Surface{t})

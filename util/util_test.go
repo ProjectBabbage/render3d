@@ -25,3 +25,19 @@ func TestNotSameSide(t *testing.T) {
 	}
 
 }
+
+func TestNormalize(t *testing.T) {
+	v := Vector{0, 0, -1}
+	if !(v.Normalize() == v) {
+		t.Errorf("erreur")
+	}
+}
+
+func TestOrthogonalize(t *testing.T) {
+	v1 := Vector{3, 4, 0}
+	v2 := Vector{1, 0, 0}
+	v := Vector{0, 4, 0}
+	if v1.Orthogonalize(v2) != v {
+		t.Errorf("erreur")
+	}
+}

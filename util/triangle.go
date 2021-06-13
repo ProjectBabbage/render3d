@@ -39,16 +39,19 @@ func (t Triangle) contains(p Vector) bool {
 	return b
 }
 
-func (t Triangle) projection(v Vector) Vector {
-	n := t.n.Normalize()
-	return v.Minus(n.Dilate(v.Minus(t.p1).ProdScal(n)))
-}
-
 func (t Triangle) Intersect(r Ray) IntersectRes {
-	p := t.projection(r.Direction())
-	d := p.Minus(r.Origin()).Norm()
-	b := r.Direction().ProdScal(t.n) < 0 && t.contains(p)
-	return IntersectRes{b, d, p}
+	x := r.Origin()
+	u := r.Direction()
+	u_n := u.ProdScal(t.n)
+	if u_n >= 0 {
+		return IntersectRes{false, 0, Vector{0, 0, 0}}
+	}
+	{
+		d := x.Minus(t.p1).ProdScal(t.n) / u_n
+		p := x.Add(u.Dilate(d))
+		b := t.contains(p)
+		return IntersectRes{b, d, p}
+	}
 }
 
 func (t Triangle) Translate(v Vector) {
