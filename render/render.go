@@ -7,8 +7,9 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 )
 
-// TODO : prendre un screen
+// Render the screen
 func Rendering(screen *Screen) {
+	// INIT SDL
 	if err := sdl.Init(sdl.INIT_EVERYTHING); err != nil {
 		panic(err)
 	}
@@ -24,15 +25,13 @@ func Rendering(screen *Screen) {
 	}
 	defer window.Destroy()
 
+	// GET SURFACE
 	surface, err := window.GetSurface()
 	if err != nil {
 		panic(err)
 	}
 
-	surface.FillRect(nil, 0)
-	rect := sdl.Rect{X: 0, Y: 0, W: 800, H: 600}
-	surface.FillRect(&rect, 0xffffffff)
-
+	// SET THE SCREEN ON THE SURFACE AND UPDATE
 	var i int
 	var j int
 	for i = 0; i < config.PixelsWidth; i++ {
@@ -44,6 +43,7 @@ func Rendering(screen *Screen) {
 	}
 	window.UpdateSurface()
 
+	// WAIT FOR AN EXIT SIGNAL
 	running := true
 	for running {
 		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
