@@ -2,7 +2,6 @@ package render
 
 import (
 	"broengine/config"
-	"fmt"
 
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -17,7 +16,7 @@ func Rendering(screen *Screen) {
 
 	window, err := sdl.CreateWindow(
 		"test", sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED,
-		config.PixelsWidth, config.PixelsHeight,
+		config.PixelsX+1, config.PixelsY+1,
 		sdl.WINDOW_SHOWN,
 	)
 	if err != nil {
@@ -32,13 +31,10 @@ func Rendering(screen *Screen) {
 	}
 
 	// SET THE SCREEN ON THE SURFACE AND UPDATE
-	var i int
-	var j int
-	for i = 0; i < config.PixelsWidth; i++ {
-		for j = 0; j < config.PixelsHeight; j++ {
-			var pixel = screen.Pixels[i][j]
-			fmt.Println(pixel)
-			surface.Set(i, j, pixel)
+	for I := 0; I <= config.PixelsX; I++ {
+		for J := 0; J <= config.PixelsY; J++ {
+			var pixelColor = screen.Pixels[I][J]
+			surface.Set(I, J, pixelColor)
 		}
 	}
 	window.UpdateSurface()

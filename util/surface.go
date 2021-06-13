@@ -27,9 +27,7 @@ func (s Scene) Intersect(r Ray) IntersectRes {
 	for _, surf := range s.Surfaces {
 		I := surf.Intersect(r)
 		if I.HasIntersection && (!res.HasIntersection || res.HasIntersection && I.Distance < res.Distance) {
-			res.HasIntersection = I.HasIntersection
-			res.Distance = I.Distance
-			res.Position = I.Position
+			res = I
 		}
 
 	}

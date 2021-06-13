@@ -47,9 +47,9 @@ func (t Triangle) Intersect(r Ray) IntersectRes {
 	if u_n >= 0 {
 		return IntersectRes{false, 0, Vector{0, 0, 0}, Vector{0, 0, 0}, 0, 0, 0, 0}
 	} else {
-		d := x.Minus(t.p1).ProdScal(t.n) / u_n
+		d := t.p1.Minus(x).ProdScal(t.n) / u_n
 		p := x.Add(u.Dilate(d))
-		b := t.contains(p)
+		b := t.contains(p) && d >= 0
 		return IntersectRes{b, d, p, t.n, t.ka, t.kd, t.ks, t.a}
 	}
 }
@@ -67,4 +67,15 @@ func ConvertTriangleListIntoSurfaceList(triangles []Triangle) []Surface {
 		surfaces = append(surfaces, triangle)
 	}
 	return surfaces
+}
+
+func (t Triangle) RecomputeNormal() Triangle {
+	u := t.p2.Minus(t.p1)
+	v := t.p3.Minus(t.p1)
+	t.n = Vector{
+		u.Y*v.Z - u.Z*v.Y,
+		u.Z*v.X - u.X*v.Z,
+		u.X*v.Y - u.Y*v.X,
+	}.Normalize()
+	return t
 }

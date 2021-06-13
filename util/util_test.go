@@ -41,3 +41,12 @@ func TestOrthogonalize(t *testing.T) {
 		t.Errorf("erreur")
 	}
 }
+
+func TestProdScal(t *testing.T) {
+	x := Vector{-5, -5, 0}
+	p := Vector{0, 0, 100}
+	n := Vector{0, 0, -1}
+	if x.Minus(p).ProdScal(n) != 100 {
+		t.Error("erreur")
+	}
+}

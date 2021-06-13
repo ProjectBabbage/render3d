@@ -6,13 +6,6 @@ import (
 	"math"
 )
 
-var p1 = Vector{10, 10, 200}
-var p2 = Vector{-10, 10, 200}
-var p3 = Vector{-10, -10, 200}
-var n = Vector{0, 0, -1}
-var t = NewTriangle(p1, p2, p3, n, 5, 2, 3, 1)
-var scene = Scene{[]Surface{t}}
-
 func calc_Ia() float64 {
 	var i float64 = 0
 	for _, light := range Lights {
@@ -31,7 +24,10 @@ func calc_id(inter IntersectRes) float64 {
 	for _, light := range Lights {
 		lm := light.Pos.Minus(p).Normalize()
 		imd := light.Id
-		i += kd * imd * lm.ProdScal(n)
+		ps := lm.ProdScal(n)
+		if ps > 0 {
+			i += kd * imd * ps
+		}
 	}
 	return i
 }
@@ -52,11 +48,13 @@ func calc_is(inter IntersectRes, r Ray) float64 {
 	return i
 }
 
-func Cast(r Ray) float64 {
+func Cast(r Ray, scene Scene) float64 {
 	inter := scene.Intersect(r)
+	if !inter.HasIntersection {
+		return 0 // no intensity
+	}
 	ia := inter.Ka * Ia
 	id := calc_id(inter)
-	is := calc_is(inter, r)
-	i := ia + id + is
+	i := ia + id
 	return i
 }
