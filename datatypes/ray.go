@@ -1,4 +1,4 @@
-package util
+package datatypes
 
 // Assume direction to be normalized
 type Ray struct {

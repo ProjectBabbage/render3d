@@ -1,9 +1,9 @@
-package util
+package assets
 
 import (
-	"log"
-
+	. "broengine/datatypes"
 	"github.com/hschendel/stl"
+	"log"
 )
 
 // Get the Triangles from a .stl file.

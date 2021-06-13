@@ -2,7 +2,7 @@ package render
 
 import (
 	. "broengine/config"
-	. "broengine/util"
+	. "broengine/datatypes"
 	"math"
 )
 

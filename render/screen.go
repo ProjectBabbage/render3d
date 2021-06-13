@@ -2,7 +2,7 @@ package render
 
 import (
 	"broengine/config"
-	"broengine/util"
+	"broengine/datatypes"
 	"image/color"
 )
 
@@ -36,13 +36,13 @@ func convertIndexToScreenIndex(i int, j int, PixelsX int, PixelsY int) (int, int
 	return I, J
 }
 
-func Render(scene *util.Scene) {
+func Render(scene *datatypes.Scene) {
 	var screen = new(Screen)
 	screen.Init() // set to black every pixel
 
 	for i := config.Lx; i <= config.Hx; i++ {
 		for j := config.Ly; j <= config.Hy; j++ {
-			ray := util.NewRay(config.Eye, config.Pxy(i, j))
+			ray := datatypes.NewRay(config.Eye, config.Pxy(i, j))
 			intensity := Cast(ray, *scene)
 			c := color.Gray{uint8(intensity)}
 			screen.FillPixel(i, j, c)

@@ -1,4 +1,4 @@
-package util
+package datatypes
 
 // When HasIntesection, we should have Distance >= 0
 type IntersectRes struct {

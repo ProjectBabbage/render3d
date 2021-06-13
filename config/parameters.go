@@ -1,7 +1,7 @@
 package config
 
 import (
-	. "broengine/util"
+	. "broengine/datatypes"
 )
 
 // Eye is at origin

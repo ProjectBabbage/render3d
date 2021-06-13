@@ -1,4 +1,4 @@
-package util
+package datatypes
 
 type Light struct {
 	Ia, Id, Is float64

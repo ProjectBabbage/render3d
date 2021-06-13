@@ -2,7 +2,6 @@ package render
 
 import (
 	"broengine/config"
-
 	"github.com/veandco/go-sdl2/sdl"
 )
 

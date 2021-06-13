@@ -1,9 +1,10 @@
 package main
 
 import (
+	. "broengine/assets"
 	. "broengine/config"
+	. "broengine/datatypes"
 	"broengine/render"
-	. "broengine/util"
 	"fmt"
 	"image/color"
 )
