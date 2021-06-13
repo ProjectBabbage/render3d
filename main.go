@@ -13,18 +13,16 @@ func main() {
 	// var cube []Surface = ParseStl("assets/cube.stl", 1, 1, 1, 1)
 	var surfaces = []Surface{}
 	listIndex := []string{
-		"gauche",
+		"front",
 		"droite",
 		"top",
 	}
 	for _, face := range listIndex {
 		filename := fmt.Sprintf("assets/faces/%s.stl", face)
-		surfaces = append(
-			surfaces,
-			SurfaceFromSurfaces(ParseStl(filename, 1, 1, 1, 1)),
-		)
+		surfaces = append(surfaces,
+			ParseStl(filename, 1, 1, 1, 1)...)
 	}
-	scene := SurfaceFromSurfaces(surfaces)
+	scene := Scene{surfaces}
 	// p1 := Vector{10, 10, 200}
 	// p2 := Vector{-30, 10, 200}
 	// p3 := Vector{-10, -40, 200}

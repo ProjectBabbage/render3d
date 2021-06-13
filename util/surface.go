@@ -18,13 +18,13 @@ type Surface interface {
 	Print()
 }
 
-type surfaces struct {
-	support []Surface
+type Scene struct {
+	Surfaces []Surface
 }
 
-func (s surfaces) Intersect(r Ray) IntersectRes {
+func (s Scene) Intersect(r Ray) IntersectRes {
 	res := IntersectRes{false, 0, Vector{0, 0, 0}, Vector{0, 0, 0}, 0, 0, 0, 0}
-	for _, surf := range s.support {
+	for _, surf := range s.Surfaces {
 		I := surf.Intersect(r)
 		if I.HasIntersection && (!res.HasIntersection || res.HasIntersection && I.Distance < res.Distance) {
 			res.HasIntersection = I.HasIntersection
@@ -36,20 +36,16 @@ func (s surfaces) Intersect(r Ray) IntersectRes {
 	return res
 }
 
-func (s surfaces) Translate(v Vector) Surface {
+func (s Scene) Translate(v Vector) Scene {
 	surfacesList := []Surface{}
-	for _, surf := range s.support {
+	for _, surf := range s.Surfaces {
 		surfacesList = append(surfacesList, surf.Translate(v))
 	}
-	return SurfaceFromSurfaces(surfacesList)
+	return Scene{surfacesList}
 }
 
-func (s surfaces) Print() {
-	for _, surf := range s.support {
+func (s Scene) Print() {
+	for _, surf := range s.Surfaces {
 		surf.Print()
 	}
-}
-
-func SurfaceFromSurfaces(surfs []Surface) Surface {
-	return surfaces{surfs}
 }
