@@ -25,7 +25,7 @@ func testSphere() {
 	plane := ParseStl("assets/plane.stl", 1, 1, 1, 1)
 
 	scene := Scene{append(sphere, plane...)}
-	scene = scene.Translate(Vector{0, 0, 10})
+	scene = scene.Translate(Vector{0, 0, 10}) // Test plane with vector {0, 1, 10} for now
 
 	render.Render(&scene)
 }
@@ -44,11 +44,11 @@ func testFaces() {
 
 	listIndex := []string{
 		"top",
-		"front", // wrong translation (opposite side)
+		"front",
 		"back",
 		"right",
-		"left",   // wrong orientation
-		"bottom", //  wrong translation (opposite site)
+		"left",
+		"bottom",
 	}
 	for _, face := range listIndex {
 		filename := fmt.Sprintf("assets/faces/%s.stl", face)

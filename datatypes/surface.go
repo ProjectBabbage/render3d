@@ -10,7 +10,13 @@ type IntersectRes struct {
 	A               float64
 }
 
-// var NoIntersection = IntersectRes{false, 0, Vector{0, 0, 0}, Vector{0, 0, 0}, 0, 0, 0, 0}
+var NoIntersection = IntersectRes{false, 0, Vector{0, 0, 0}, Vector{0, 0, 0}, 0, 0, 0, 0}
+
+func (I1 *IntersectRes) Update(I2 IntersectRes) {
+	if !I1.HasIntersection || I2.HasIntersection && I2.Distance < I1.Distance {
+		*I1 = I2
+	}
+}
 
 type Surface interface {
 	Intersect(Ray) IntersectRes
@@ -23,13 +29,10 @@ type Scene struct {
 }
 
 func (s Scene) Intersect(r Ray) IntersectRes {
-	res := IntersectRes{false, 0, Vector{0, 0, 0}, Vector{0, 0, 0}, 0, 0, 0, 0}
+	res := NoIntersection
 	for _, surf := range s.Surfaces {
 		I := surf.Intersect(r)
-		if I.HasIntersection && (!res.HasIntersection || res.HasIntersection && I.Distance < res.Distance) {
-			res = I
-		}
-
+		res.Update(I)
 	}
 	return res
 }

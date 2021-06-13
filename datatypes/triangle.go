@@ -15,8 +15,8 @@ func NewTriangle(p1, p2, p3, n Vector, ka, kd, ks, a float64) Triangle {
 	return Triangle{p1, p2, p3, n.Normalize(), ka, kd, ks, a}
 }
 
-func (v Triangle) Print() {
-	fmt.Println(v)
+func (t Triangle) Print() {
+	fmt.Printf("Triangle : %+v\n", t)
 }
 
 // Indicate if x is on the same side of p3 compared to the line p1-p2
