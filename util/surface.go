@@ -5,11 +5,12 @@ type IntersectRes struct {
 	HasIntersection bool
 	Distance        float64
 	Position        Vector
+	Normale         Vector
 	Ka, Kd, Ks      float64
 	A               float64
 }
 
-var NoIntersection = IntersectRes{false, 0, Vector{0, 0, 0}, 0, 0, 0, 0}
+var NoIntersection = IntersectRes{false, 0, Vector{0, 0, 0}, Vector{0, 0, 0}, 0, 0, 0, 0}
 
 type Surface interface {
 	Intersect(Ray) IntersectRes
