@@ -8,13 +8,20 @@ import (
 )
 
 func main() {
-	p1 := Vector{10, 10, 200}
-	p2 := Vector{-10, 10, 200}
-	p3 := Vector{-10, -10, 200}
-	n := Vector{0, 0, -1}
-	t := NewTriangle(p1, p2, p3, n, 5, 2, 3, 1)
+	// load the sphere
+	var cube []Surface = ConvertTriangleListIntoSurfaceList(
+		ParseStl("assets/cube.stl", 1, 1, 1, 1),
+	)
 
-	scene := SurfaceFromSurfaces([]Surface{t})
+	// p1 := Vector{10, 10, 200}
+	// p2 := Vector{-30, 10, 200}
+	// p3 := Vector{-10, -40, 200}
+	// n := Vector{0, 0, -1}
+	// t := NewTriangle(p1, p2, p3, n, 5, 2, 3, 1)
+
+	scene := SurfaceFromSurfaces(cube)
+
+	scene = scene.Translate(Vector{0, 0, 40})
 
 	var screen = new(render.Screen)
 

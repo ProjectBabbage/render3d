@@ -39,9 +39,9 @@ func Rendering(screen *Screen) {
 			var pixel = screen.Pixels[i][j]
 			fmt.Println(pixel)
 			surface.Set(i, j, pixel)
+			window.UpdateSurface()
 		}
 	}
-	window.UpdateSurface()
 
 	// WAIT FOR AN EXIT SIGNAL
 	running := true

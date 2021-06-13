@@ -18,11 +18,11 @@ const ScreenHeight float64 = 50
 var Lights = []Light{Light{5, 2, 3, Vector{100, 0, 200}}}
 
 //
-const PixelsWidth = 200
+const PixelsWidth = 300
 const Lx = -PixelsWidth / 2
 const Hx = PixelsWidth / 2
 
-const PixelsHeight = 100
+const PixelsHeight = 300
 const Ly = -PixelsHeight / 2
 const Hy = PixelsHeight / 2
 

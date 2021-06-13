@@ -14,7 +14,7 @@ var NoIntersection = IntersectRes{false, 0, Vector{0, 0, 0}, Vector{0, 0, 0}, 0,
 
 type Surface interface {
 	Intersect(Ray) IntersectRes
-	Translate(Vector)
+	Translate(Vector) Surface
 	Print()
 }
 
@@ -36,10 +36,12 @@ func (s surfaces) Intersect(r Ray) IntersectRes {
 	return res
 }
 
-func (s surfaces) Translate(v Vector) {
+func (s surfaces) Translate(v Vector) Surface {
+	surfacesList := []Surface{}
 	for _, surf := range s.support {
-		surf.Translate(v)
+		surfacesList = append(surfacesList, surf.Translate(v))
 	}
+	return SurfaceFromSurfaces(surfacesList)
 }
 
 func (s surfaces) Print() {

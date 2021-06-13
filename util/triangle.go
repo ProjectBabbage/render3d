@@ -55,8 +55,17 @@ func (t Triangle) Intersect(r Ray) IntersectRes {
 	}
 }
 
-func (t Triangle) Translate(v Vector) {
+func (t Triangle) Translate(v Vector) Surface {
 	t.p1 = t.p1.Add(v)
 	t.p2 = t.p2.Add(v)
 	t.p3 = t.p3.Add(v)
+	return t
+}
+
+func ConvertTriangleListIntoSurfaceList(triangles []Triangle) []Surface {
+	var surfaces = []Surface{}
+	for _, triangle := range triangles {
+		surfaces = append(surfaces, triangle)
+	}
+	return surfaces
 }
