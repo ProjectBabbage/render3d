@@ -15,7 +15,7 @@ const ScreenWidth float64 = 50
 const ScreenHeight float64 = 50
 
 // Position of the light
-var Light = Vector{100, 0, 200}
+var Lights = []Light{Light{5, 2, 3, Vector{100, 0, 200}}}
 
 //
 const PixelsWidth = 200

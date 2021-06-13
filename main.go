@@ -8,11 +8,11 @@ import (
 )
 
 func main() {
-	p1 := Vector{20, 20, 200}
-	p2 := Vector{-15, -30, 200}
-	p3 := Vector{40, -10, 200}
+	p1 := Vector{10, 10, 200}
+	p2 := Vector{-10, 10, 200}
+	p3 := Vector{-10, -10, 200}
 	n := Vector{0, 0, -1}
-	t := NewTriangle(p1, p2, p3, n)
+	t := NewTriangle(p1, p2, p3, n, 5, 2, 3, 1)
 
 	scene := SurfaceFromSurfaces([]Surface{t})
 

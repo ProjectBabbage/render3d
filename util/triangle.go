@@ -6,12 +6,13 @@ import (
 
 // Assume P1, P2, P3 to be distinct and N to be normalized
 type Triangle struct {
-	p1, p2, p3 Vector
-	n          Vector
+	p1, p2, p3    Vector
+	n             Vector
+	ka, kd, ks, a float64
 }
 
-func NewTriangle(p1, p2, p3, n Vector) Triangle {
-	return Triangle{p1, p2, p3, n.Normalize()}
+func NewTriangle(p1, p2, p3, n Vector, ka, kd, ks, a float64) Triangle {
+	return Triangle{p1, p2, p3, n.Normalize(), ka, kd, ks, a}
 }
 
 func (v Triangle) Print() {
@@ -44,13 +45,13 @@ func (t Triangle) Intersect(r Ray) IntersectRes {
 	u := r.Direction()
 	u_n := u.ProdScal(t.n)
 	if u_n >= 0 {
-		return IntersectRes{false, 0, Vector{0, 0, 0}}
+		return IntersectRes{false, 0, Vector{0, 0, 0}, 0, 0, 0, 0}
 	}
 	{
 		d := x.Minus(t.p1).ProdScal(t.n) / u_n
 		p := x.Add(u.Dilate(d))
 		b := t.contains(p)
-		return IntersectRes{b, d, p}
+		return IntersectRes{b, d, p, t.ka, t.kd, t.ks, t.a}
 	}
 }
 
