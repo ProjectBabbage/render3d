@@ -1,12 +1,13 @@
 package util
 
 import (
-	"github.com/hschendel/stl"
 	"log"
+
+	"github.com/hschendel/stl"
 )
 
 // Get the Triangles from a .stl file.
-func ParseStl(filepath string, ka, kd, ks, a float64) []Triangle {
+func ParseStl(filepath string, ka, kd, ks, a float64) []Surface {
 
 	s, err := stl.ReadFile(filepath)
 	if err != nil {
@@ -17,7 +18,7 @@ func ParseStl(filepath string, ka, kd, ks, a float64) []Triangle {
 	for i := 0; i < len(s.Triangles); i++ {
 		triangles[i] = convertTriangle(s.Triangles[i], ka, kd, ks, a)
 	}
-	return triangles
+	return ConvertTriangleListIntoSurfaceList(triangles)
 }
 
 func convertTriangle(t stl.Triangle, ka, kd, ks, a float64) Triangle {

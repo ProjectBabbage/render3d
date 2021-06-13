@@ -8,7 +8,7 @@ import (
 func TestStlParser(t *testing.T) {
 	filepath := "../assets/cube.stl"
 
-	triangles := ParseStl(filepath)
+	triangles := ParseStl(filepath, 1, 1, 1, 1)
 	if triangles == nil {
 		t.Error("couln't read the file with the third party library")
 	}

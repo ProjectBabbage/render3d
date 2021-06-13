@@ -4,24 +4,36 @@ import (
 	. "broengine/config"
 	"broengine/render"
 	. "broengine/util"
+	"fmt"
 	"image/color"
 )
 
 func main() {
 	// load the sphere
-	var cube []Surface = ConvertTriangleListIntoSurfaceList(
-		ParseStl("assets/cube.stl", 1, 1, 1, 1),
-	)
-
+	// var cube []Surface = ParseStl("assets/cube.stl", 1, 1, 1, 1)
+	var surfaces = []Surface{}
+	listIndex := []string{
+		"gauche",
+		"droite",
+		"top",
+	}
+	for _, face := range listIndex {
+		filename := fmt.Sprintf("assets/faces/%s.stl", face)
+		surfaces = append(
+			surfaces,
+			SurfaceFromSurfaces(ParseStl(filename, 1, 1, 1, 1)),
+		)
+	}
+	scene := SurfaceFromSurfaces(surfaces)
 	// p1 := Vector{10, 10, 200}
 	// p2 := Vector{-30, 10, 200}
 	// p3 := Vector{-10, -40, 200}
 	// n := Vector{0, 0, -1}
 	// t := NewTriangle(p1, p2, p3, n, 5, 2, 3, 1)
 
-	scene := SurfaceFromSurfaces(cube)
+	// scene := SurfaceFromSurfaces(cube)
 
-	scene = scene.Translate(Vector{0, 0, 40})
+	scene = scene.Translate(Vector{4, -4, 40})
 
 	var screen = new(render.Screen)
 

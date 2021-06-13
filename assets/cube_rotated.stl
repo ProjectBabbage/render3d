@@ -1,0 +1,86 @@
+solid Exported from Blender-2.91.0
+facet normal -0.168017 0.317421 0.933281
+outer loop
+vertex 0.279195 1.610099 0.574135
+vertex -1.488450 0.674453 0.574135
+vertex -0.615228 -0.975257 1.292427
+endloop
+endfacet
+facet normal -0.168017 0.317421 0.933281
+outer loop
+vertex 0.279195 1.610099 0.574135
+vertex -0.615228 -0.975257 1.292427
+vertex 1.152416 -0.039610 1.292427
+endloop
+endfacet
+facet normal 0.436611 -0.824855 0.359146
+outer loop
+vertex 1.488450 -0.674453 -0.574135
+vertex 1.152416 -0.039610 1.292427
+vertex -0.615228 -0.975257 1.292427
+endloop
+endfacet
+facet normal 0.436611 -0.824855 0.359146
+outer loop
+vertex 1.488450 -0.674453 -0.574135
+vertex -0.615228 -0.975257 1.292427
+vertex -0.279195 -1.610099 -0.574135
+endloop
+endfacet
+facet normal -0.883822 -0.467823 0.000000
+outer loop
+vertex -0.279195 -1.610099 -0.574135
+vertex -0.615228 -0.975257 1.292427
+vertex -1.488450 0.674453 0.574135
+endloop
+endfacet
+facet normal -0.883822 -0.467823 0.000000
+outer loop
+vertex -0.279195 -1.610099 -0.574135
+vertex -1.488450 0.674453 0.574135
+vertex -1.152416 0.039610 -1.292427
+endloop
+endfacet
+facet normal 0.168017 -0.317421 -0.933281
+outer loop
+vertex -1.152416 0.039610 -1.292427
+vertex 0.615228 0.975257 -1.292427
+vertex 1.488450 -0.674453 -0.574135
+endloop
+endfacet
+facet normal 0.168017 -0.317421 -0.933281
+outer loop
+vertex -1.152416 0.039610 -1.292427
+vertex 1.488450 -0.674453 -0.574135
+vertex -0.279195 -1.610099 -0.574135
+endloop
+endfacet
+facet normal 0.883822 0.467823 -0.000000
+outer loop
+vertex 0.615228 0.975257 -1.292427
+vertex 0.279195 1.610099 0.574135
+vertex 1.152416 -0.039610 1.292427
+endloop
+endfacet
+facet normal 0.883822 0.467823 -0.000000
+outer loop
+vertex 0.615228 0.975257 -1.292427
+vertex 1.152416 -0.039610 1.292427
+vertex 1.488450 -0.674453 -0.574135
+endloop
+endfacet
+facet normal -0.436611 0.824855 -0.359146
+outer loop
+vertex -1.152416 0.039610 -1.292427
+vertex -1.488450 0.674453 0.574135
+vertex 0.279195 1.610099 0.574135
+endloop
+endfacet
+facet normal -0.436611 0.824855 -0.359146
+outer loop
+vertex -1.152416 0.039610 -1.292427
+vertex 0.279195 1.610099 0.574135
+vertex 0.615228 0.975257 -1.292427
+endloop
+endfacet
+endsolid Exported from Blender-2.91.0

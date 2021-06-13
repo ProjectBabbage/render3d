@@ -10,7 +10,7 @@ type IntersectRes struct {
 	A               float64
 }
 
-var NoIntersection = IntersectRes{false, 0, Vector{0, 0, 0}, Vector{0, 0, 0}, 0, 0, 0, 0}
+// var NoIntersection = IntersectRes{false, 0, Vector{0, 0, 0}, Vector{0, 0, 0}, 0, 0, 0, 0}
 
 type Surface interface {
 	Intersect(Ray) IntersectRes
@@ -23,7 +23,7 @@ type surfaces struct {
 }
 
 func (s surfaces) Intersect(r Ray) IntersectRes {
-	res := NoIntersection
+	res := IntersectRes{false, 0, Vector{0, 0, 0}, Vector{0, 0, 0}, 0, 0, 0, 0}
 	for _, surf := range s.support {
 		I := surf.Intersect(r)
 		if I.HasIntersection && (!res.HasIntersection || res.HasIntersection && I.Distance < res.Distance) {
