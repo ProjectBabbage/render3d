@@ -1,6 +1,6 @@
 # broengine
 
-Coordinates system: 
+Coordinate system: 
     Origin is where the Eye is (0, 0, 0)
 
     -------------> X
@@ -9,7 +9,7 @@ Coordinates system:
     |
     Y is oriented down (same as SDL)
 
-    Z follow the right hand rule
+    Z follows the right hand rule (goes up from your eyes to the screen)
 
 
 # Rendering result
