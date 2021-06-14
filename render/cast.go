@@ -1,27 +1,24 @@
 package render
 
 import (
-	. "broengine/config"
 	. "broengine/datatypes"
 	"math"
 )
 
-func calc_Ia() float64 {
+func calc_Ia(scene Scene) float64 {
 	var i float64 = 0
-	for _, light := range Lights {
+	for _, light := range scene.Lights {
 		i += light.Ia
 	}
 	return i
 }
 
-var Ia = calc_Ia()
-
-func calc_id(inter IntersectRes) float64 {
+func calc_id(inter IntersectRes, scene Scene) float64 {
 	var i float64 = 0
 	p := inter.Position
 	n := inter.Normale
 	kd := inter.Kd
-	for _, light := range Lights {
+	for _, light := range scene.Lights {
 		lm := light.Pos.Minus(p).Normalize()
 		imd := light.Id
 		ps := lm.ProdScal(n)
@@ -32,14 +29,14 @@ func calc_id(inter IntersectRes) float64 {
 	return i
 }
 
-func calc_is(inter IntersectRes, r Ray) float64 {
+func calc_is(inter IntersectRes, r Ray, scene Scene) float64 {
 	var i float64 = 0
 	p := inter.Position
 	n := inter.Normale
 	ks := inter.Ks
 	v := r.Direction()
 	a := inter.A
-	for _, light := range Lights {
+	for _, light := range scene.Lights {
 		lm := light.Pos.Minus(p).Normalize()
 		rm := lm.Minus(n.Dilate(2 * n.ProdScal(lm)))
 		ims := light.Is
@@ -53,8 +50,8 @@ func Cast(r Ray, scene Scene) float64 {
 	if !inter.HasIntersection {
 		return 0 // no intensity
 	}
-	ia := inter.Ka * Ia
-	id := calc_id(inter)
+	ia := inter.Ka * calc_Ia(scene)
+	id := calc_id(inter, scene)
 	i := ia + id
 	return i
 }

@@ -24,8 +24,12 @@ func testSphere() {
 	sphere := ParseStl("assets/sphere.stl", 1, 1, 1, 1)
 	plane := ParseStl("assets/plane.stl", 1, 1, 1, 1)
 
-	scene := Scene{append(sphere, plane...)}
-	scene = scene.Translate(Vector{0, 0, 10}) // Test plane with vector {0, 1, 10} for now
+	sphere = sphere.Translate(Vector{0, 0, 10})
+	plane = plane.Translate(Vector{0, 2, 10})
+
+	scene := NewEmptyScene()
+	scene.AddObjects(sphere, plane)
+	scene.AddLights(Lights...)
 
 	render.Render(&scene)
 }
@@ -33,14 +37,16 @@ func testSphere() {
 func testCubeRotated() {
 	cube_rotated := ParseStl("assets/cube_rotated.stl", 1, 1, 1, 1)
 
-	scene := Scene{cube_rotated}
-	scene = scene.Translate(Vector{2, 0, 10})
+	cube_rotated = cube_rotated.Translate(Vector{2, 0, 10})
+	scene := NewEmptyScene()
+	scene.AddObjects(cube_rotated)
+	scene.AddLights(Lights...)
 
 	render.Render(&scene)
 }
 
 func testFaces() {
-	var surfaces = []Surface{}
+	var objects = []Object{}
 
 	listIndex := []string{
 		"top",
@@ -52,14 +58,13 @@ func testFaces() {
 	}
 	for _, face := range listIndex {
 		filename := fmt.Sprintf("assets/faces/%s.stl", face)
-		surfaces = append(
-			surfaces,
-			ParseStl(filename, 1, 1, 1, 1)...,
-		)
+		objects = append(objects, ParseStl(filename, 1, 1, 1, 1))
 	}
 
-	scene := Scene{surfaces}
-	scene = scene.Translate(Vector{0, 0, 10})
+	scene := NewEmptyScene()
+	scene.AddObjects(objects...)
+	scene.AddLights(Lights...)
+	scene.TranslateObjects(Vector{0, 0, 10})
 
 	render.Render(&scene)
 }
@@ -71,8 +76,11 @@ func triangleTest() {
 	p3 := Vector{25, 0, distance}
 	newTriangle := NewTriangle(p1, p2, p3, Vector{0, 0, 0}, 1, 1, 1, 1)
 	newTriangle = newTriangle.RecomputeNormal()
+	o := Object{[]Surface{newTriangle}}
 
-	scene := Scene{[]Surface{newTriangle}}
+	scene := NewEmptyScene()
+	scene.AddObjects(o)
+	scene.AddLights(Lights...)
 	// scene = scene.Translate(Vector{4, -4, 40})
 	var screen = new(render.Screen)
 	screen.Init() // set to black every pixel

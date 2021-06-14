@@ -24,29 +24,58 @@ type Surface interface {
 	Print()
 }
 
-type Scene struct {
+type Object struct {
 	Surfaces []Surface
 }
 
-func (s Scene) Intersect(r Ray) IntersectRes {
+func (obj Object) Intersect(r Ray) IntersectRes {
 	res := NoIntersection
-	for _, surf := range s.Surfaces {
+	for _, surf := range obj.Surfaces {
 		I := surf.Intersect(r)
 		res.Update(I)
 	}
 	return res
 }
 
-func (s Scene) Translate(v Vector) Scene {
-	surfacesList := []Surface{}
-	for _, surf := range s.Surfaces {
-		surfacesList = append(surfacesList, surf.Translate(v))
+func (obj Object) Translate(v Vector) Object {
+	surfaces := []Surface{}
+	for _, surf := range obj.Surfaces {
+		surfaces = append(surfaces, surf.Translate(v))
 	}
-	return Scene{surfacesList}
+	return Object{surfaces}
 }
 
-func (s Scene) Print() {
-	for _, surf := range s.Surfaces {
+func (obj Object) Print() {
+	for _, surf := range obj.Surfaces {
 		surf.Print()
 	}
+}
+
+type Scene struct {
+	objects Object
+	Lights  []Light
+}
+
+func NewEmptyScene() Scene {
+	return Scene{Object{[]Surface{}}, []Light{}}
+}
+
+func (s *Scene) AddObjects(objs ...Object) {
+	surfs := s.objects.Surfaces
+	for _, obj := range objs {
+		surfs = append(surfs, obj.Surfaces...)
+	}
+	s.objects = Object{surfs}
+}
+
+func (s *Scene) AddLights(lights ...Light) {
+	s.Lights = append(s.Lights, lights...)
+}
+
+func (s *Scene) TranslateObjects(v Vector) {
+	(*s).objects = s.objects.Translate(v)
+}
+
+func (s Scene) Intersect(r Ray) IntersectRes {
+	return s.objects.Intersect(r)
 }

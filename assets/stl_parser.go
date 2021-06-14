@@ -7,18 +7,17 @@ import (
 )
 
 // Get the Triangles from a .stl file.
-func ParseStl(filepath string, ka, kd, ks, a float64) []Surface {
+func ParseStl(filepath string, ka, kd, ks, a float64) Object {
 
 	s, err := stl.ReadFile(filepath)
 	if err != nil {
 		log.Fatalf("Error when parsing the stl file %s", filepath)
-		return nil
 	}
-	triangles := make([]Triangle, len(s.Triangles))
+	var triangles []Surface = make([]Surface, len(s.Triangles))
 	for i := 0; i < len(s.Triangles); i++ {
 		triangles[i] = convertTriangle(s.Triangles[i], ka, kd, ks, a)
 	}
-	return ConvertTriangleListIntoSurfaceList(triangles)
+	return Object{triangles}
 }
 
 func convertTriangle(t stl.Triangle, ka, kd, ks, a float64) Triangle {
