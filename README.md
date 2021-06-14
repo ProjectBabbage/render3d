@@ -18,14 +18,21 @@ A simple sphere (so beautifuul !!)
 
 ![img](assets/simple_sphere.png)
 
+=======
+# Installation
 
+Install golang, then:
+(Ubuntu working example)
+```
+sudo apt install libsdl2-2.0-0 libsdl2-dev
+
+go install
+```
+then do `go run main.go`
+
+=======
 # Testing
 
-Test everything:
-```
-go test -v ./...
-```
-Also run the benchs:
-```
-go test -v ./... -bench .
-```
+Run the tests with `go test -v ./...`
+
+Run the benchs (and tests) with `go test -v ./... -bench`
