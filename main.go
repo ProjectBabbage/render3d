@@ -25,39 +25,38 @@ func testSphere() {
 	sphere := ParseStl("assets/sphere.stl", 1, 1, 1, 1)
 	plane := ParseStl("assets/plane.stl", 1, 1, 1, 1)
 
-	sphere = sphere.Translate(Vector{0, 0, 10})
-	plane = plane.Translate(Vector{0, 2, 10})
+	sphere.Translate(Vector{0, 0, 10})
+	plane.Translate(Vector{0, 2, 10})
 
 	scene := NewEmptyScene()
 	scene.AddObjects(sphere, plane)
 	scene.AddLights(Lights...)
 
-	render.Render(&scene)
+	render.Render(scene)
 }
 
 func testCubeRotated() {
 	cube_rotated := ParseStl("assets/cube_rotated.stl", 1, 1, 1, 1)
 
-	cube_rotated = cube_rotated.Translate(Vector{2, 0, 15})
+	cube_rotated.Translate(Vector{2, 0, 15})
 	scene := NewEmptyScene()
 	scene.AddObjects(cube_rotated)
 	scene.AddLights(Lights...)
 
-	render.Render(&scene)
+	render.Render(scene)
 }
 
 func testCube() {
 	cube := ParseStl("assets/cube.stl", 1, 1, 1, 1)
 
-	cube = cube.Rotate(YAxis, 90)
-	cube = cube.Rotate(XAxis, 20)
-	cube = cube.Rotate(YAxis, 20)
-	cube = cube.Translate(Vector{2, 0, 15})
+	cube.Rotate(XAxis, 20)
+	cube.Rotate(YAxis, 20)
+	cube.Translate(Vector{2, 0, 15})
 	scene := NewEmptyScene()
 	scene.AddObjects(cube)
 	scene.AddLights(Lights...)
 
-	render.Render(&scene)
+	render.Render(scene)
 }
 
 func testFaces() {
@@ -82,7 +81,7 @@ func testFaces() {
 	scene.AddLights(Lights...)
 	scene.TranslateObjects(Vector{0, 0, 10})
 
-	render.Render(&scene)
+	render.Render(scene)
 }
 
 func triangleTest() {
@@ -91,8 +90,8 @@ func triangleTest() {
 	p2 := Vector{0, 25, distance}
 	p3 := Vector{25, 0, distance}
 	newTriangle := NewTriangle(p1, p2, p3, Vector{0, 0, 0}, 1, 1, 1, 1)
-	newTriangle = newTriangle.RecomputeNormal()
-	o := Object{[]Surface{newTriangle}}
+	newTriangle.RecomputeNormal()
+	o := Object{[]Surface{&newTriangle}}
 
 	scene := NewEmptyScene()
 	scene.AddObjects(o)

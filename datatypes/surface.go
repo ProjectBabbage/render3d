@@ -22,9 +22,9 @@ func (I1 *IntersectRes) Update(I2 IntersectRes) {
 
 type Surface interface {
 	Intersect(Ray) IntersectRes
-	Translate(Vector) Surface
-	Dilate(float64) Surface
-	Rotate(int, float64) Surface
+	Translate(Vector)
+	Dilate(float64)
+	Rotate(int, float64)
 	Print()
 }
 
@@ -41,28 +41,31 @@ func (obj Object) Intersect(r Ray) IntersectRes {
 	return res
 }
 
-func (obj Object) Translate(v Vector) Object {
+func (obj *Object) Translate(v Vector) {
 	surfaces := []Surface{}
 	for _, surf := range obj.Surfaces {
-		surfaces = append(surfaces, surf.Translate(v))
+		surf.Translate(v)
+		surfaces = append(surfaces, surf)
 	}
-	return Object{surfaces}
+	obj.Surfaces = surfaces
 }
 
-func (obj Object) Dilate(t float64) Object {
+func (obj *Object) Dilate(t float64) {
 	surfaces := []Surface{}
 	for _, surf := range obj.Surfaces {
-		surfaces = append(surfaces, surf.Dilate(t))
+		surf.Dilate(t)
+		surfaces = append(surfaces, surf)
 	}
-	return Object{surfaces}
+	obj.Surfaces = surfaces
 }
 
-func (obj Object) Rotate(axis int, d float64) Object {
+func (obj *Object) Rotate(axis int, d float64) {
 	surfaces := []Surface{}
 	for _, surf := range obj.Surfaces {
-		surfaces = append(surfaces, surf.Rotate(axis, d))
+		surf.Rotate(axis, d)
+		surfaces = append(surfaces, surf)
 	}
-	return Object{surfaces}
+	obj.Surfaces = surfaces
 }
 
 func (obj Object) Print() {
@@ -94,7 +97,7 @@ func (s *Scene) AddLights(lights ...Light) {
 }
 
 func (s *Scene) TranslateObjects(v Vector) {
-	(*s).objects = s.objects.Translate(v)
+	s.objects.Translate(v)
 }
 
 func (s Scene) Intersect(r Ray) IntersectRes {

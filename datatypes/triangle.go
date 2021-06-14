@@ -17,26 +17,23 @@ func (t Triangle) Print() {
 	fmt.Printf("Triangle : %+v\n", t)
 }
 
-func (t Triangle) Translate(v Vector) Surface {
+func (t *Triangle) Translate(v Vector) {
 	t.p1 = t.p1.Add(v)
 	t.p2 = t.p2.Add(v)
 	t.p3 = t.p3.Add(v)
-	return t
 }
 
-func (t Triangle) Dilate(x float64) Surface {
+func (t *Triangle) Dilate(x float64) {
 	t.p1 = t.p1.Dilate(x)
 	t.p2 = t.p2.Dilate(x)
 	t.p3 = t.p3.Dilate(x)
-	return t
 }
 
-func (t Triangle) Rotate(axis int, d float64) Surface {
+func (t *Triangle) Rotate(axis int, d float64) {
 	t.p1 = t.p1.Rotate(axis, d)
 	t.p2 = t.p2.Rotate(axis, d)
 	t.p3 = t.p3.Rotate(axis, d)
 	t.n = t.n.Rotate(axis, d)
-	return t
 }
 
 // Indicate if x is on the same side of p3 compared to the line p1-p2
@@ -74,15 +71,15 @@ func (t Triangle) Intersect(r Ray) IntersectRes {
 	}
 }
 
-func ConvertTriangleListIntoSurfaceList(triangles []Triangle) []Surface {
-	var surfaces = []Surface{}
-	for _, triangle := range triangles {
-		surfaces = append(surfaces, triangle)
-	}
-	return surfaces
-}
+// func ConvertTriangleListIntoSurfaceList(triangles []Triangle) []Surface {
+// 	var surfaces = []Surface{}
+// 	for _, triangle := range triangles {
+// 		surfaces = append(surfaces, triangle)
+// 	}
+// 	return surfaces
+// }
 
-func (t Triangle) RecomputeNormal() Triangle {
+func (t *Triangle) RecomputeNormal() {
 	u := t.p2.Minus(t.p1)
 	v := t.p3.Minus(t.p1)
 	t.n = Vector{
@@ -90,5 +87,4 @@ func (t Triangle) RecomputeNormal() Triangle {
 		u.Z*v.X - u.X*v.Z,
 		u.X*v.Y - u.Y*v.X,
 	}.Normalize()
-	return t
 }

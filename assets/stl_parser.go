@@ -2,6 +2,7 @@ package assets
 
 import (
 	. "broengine/datatypes"
+	"fmt"
 	"github.com/hschendel/stl"
 	"log"
 )
@@ -11,11 +12,13 @@ func ParseStl(filepath string, ka, kd, ks, a float64) Object {
 
 	s, err := stl.ReadFile(filepath)
 	if err != nil {
+		fmt.Println(err)
 		log.Fatalf("Error when parsing the stl file %s", filepath)
 	}
 	var triangles []Surface = make([]Surface, len(s.Triangles))
 	for i := 0; i < len(s.Triangles); i++ {
-		triangles[i] = convertTriangle(s.Triangles[i], ka, kd, ks, a)
+		tri := convertTriangle(s.Triangles[i], ka, kd, ks, a)
+		triangles[i] = &tri
 	}
 	return Object{triangles}
 }

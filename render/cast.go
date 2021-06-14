@@ -19,7 +19,7 @@ func calc_id(inter IntersectRes, scene Scene) float64 {
 	n := inter.Normale
 	kd := inter.Kd
 	for _, light := range scene.Lights {
-		lm := light.Pos.Minus(p).Normalize()
+		lm := light.Minus(p).Normalize()
 		imd := light.Id
 		ps := lm.ProdScal(n)
 		shadowRay := NewRay(p, lm)
@@ -39,7 +39,7 @@ func calc_is(inter IntersectRes, r Ray, scene Scene) float64 {
 	v := r.Direction()
 	a := inter.A
 	for _, light := range scene.Lights {
-		lm := light.Pos.Minus(p).Normalize()
+		lm := light.Minus(p).Normalize()
 		rm := lm.Minus(n.Dilate(2 * n.ProdScal(lm)))
 		ims := light.Is
 		i += ks * ims * math.Pow(rm.ProdScal(v), a)

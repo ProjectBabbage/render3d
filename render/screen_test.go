@@ -9,7 +9,7 @@ func TestConvertIndexToScreenIndex(t *testing.T) {
 	PixelsY := 100
 
 	var i, j = 10, 20
-	var expected_I, expected_J = 110, 30
+	var expected_I, expected_J = 110, 70
 	var I, J int
 	I, J = convertIndexToScreenIndex(i, j, PixelsX, PixelsY)
 	t.Log(i, j)

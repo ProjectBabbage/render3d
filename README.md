@@ -17,3 +17,15 @@ Coordinate system:
 A simple sphere (so beautifuul !!)
 
 ![img](assets/simple_sphere.png)
+
+
+# Testing
+
+Test everything:
+```
+go test -v ./...
+```
+Also run the benchs:
+```
+go test -v ./... -bench .
+```
