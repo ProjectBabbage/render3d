@@ -4,6 +4,9 @@ import (
 	. "broengine/datatypes"
 )
 
+// If you don't have a gpu, replace by "cpu"
+const RenderBackend string = "gpu"
+
 // Eye is at origin
 var Eye = Vector{X: 0, Y: 0, Z: 0}
 

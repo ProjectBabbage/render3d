@@ -17,3 +17,14 @@ Coordinate system:
 A simple sphere (so beautifuul !!)
 
 ![img](assets/simple_sphere.png)
+
+# Installation
+
+Install golang, then:
+(Ubuntu working example)
+```
+sudo apt install libsdl2-2.0-0 libsdl2-dev
+
+go install
+```
+then do `go run main.go`
