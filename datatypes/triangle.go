@@ -1,8 +1,6 @@
 package datatypes
 
-import (
-	"fmt"
-)
+import "fmt"
 
 // Assume P1, P2, P3 to be distinct and N to be normalized
 type Triangle struct {
@@ -17,6 +15,28 @@ func NewTriangle(p1, p2, p3, n Vector, ka, kd, ks, a float64) Triangle {
 
 func (t Triangle) Print() {
 	fmt.Printf("Triangle : %+v\n", t)
+}
+
+func (t Triangle) Translate(v Vector) Surface {
+	t.p1 = t.p1.Add(v)
+	t.p2 = t.p2.Add(v)
+	t.p3 = t.p3.Add(v)
+	return t
+}
+
+func (t Triangle) Dilate(x float64) Surface {
+	t.p1 = t.p1.Dilate(x)
+	t.p2 = t.p2.Dilate(x)
+	t.p3 = t.p3.Dilate(x)
+	return t
+}
+
+func (t Triangle) Rotate(axis int, d float64) Surface {
+	t.p1 = t.p1.Rotate(axis, d)
+	t.p2 = t.p2.Rotate(axis, d)
+	t.p3 = t.p3.Rotate(axis, d)
+	t.n = t.n.Rotate(axis, d)
+	return t
 }
 
 // Indicate if x is on the same side of p3 compared to the line p1-p2
@@ -52,13 +72,6 @@ func (t Triangle) Intersect(r Ray) IntersectRes {
 		b := t.contains(p) && d >= 0
 		return IntersectRes{b, d, p, t.n, t.ka, t.kd, t.ks, t.a}
 	}
-}
-
-func (t Triangle) Translate(v Vector) Surface {
-	t.p1 = t.p1.Add(v)
-	t.p2 = t.p2.Add(v)
-	t.p3 = t.p3.Add(v)
-	return t
 }
 
 func ConvertTriangleListIntoSurfaceList(triangles []Triangle) []Surface {

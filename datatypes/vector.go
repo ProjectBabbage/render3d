@@ -2,7 +2,7 @@ package datatypes
 
 import (
 	"fmt"
-	"math"
+	. "math"
 )
 
 type Vector struct {
@@ -10,7 +10,7 @@ type Vector struct {
 }
 
 func (v Vector) Norm() float64 {
-	return math.Sqrt(v.X*v.X + v.Y*v.Y + v.Z*v.Z)
+	return Sqrt(v.X*v.X + v.Y*v.Y + v.Z*v.Z)
 }
 
 func (v Vector) Normalize() Vector {
@@ -31,6 +31,32 @@ func (v1 Vector) Minus(v2 Vector) Vector {
 
 func (v Vector) Dilate(t float64) Vector {
 	return Vector{t * v.X, t * v.Y, t * v.Z}
+}
+
+const XAxis = 1
+const YAxis = 2
+const ZAxis = 3
+
+func (v Vector) Rotate(axis int, degrees float64) Vector {
+	rad := degrees * Pi / 180
+	switch axis {
+	case ZAxis:
+		v = Vector{
+			v.X*Cos(rad) - v.Y*Sin(rad),
+			v.X*Sin(rad) + v.Y*Cos(rad),
+			v.Z}
+	case XAxis:
+		v = Vector{
+			v.X,
+			v.Y*Cos(rad) - v.Z*Sin(rad),
+			v.Y*Sin(rad) + v.Z*Cos(rad)}
+	case YAxis:
+		v = Vector{
+			v.Z*Sin(rad) + v.X*Cos(rad),
+			v.Y,
+			v.Z*Cos(rad) - v.X*Sin(rad)}
+	}
+	return v
 }
 
 func (v1 Vector) ProdScal(v2 Vector) float64 {

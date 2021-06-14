@@ -1,5 +1,7 @@
 package datatypes
 
+import "fmt"
+
 // When HasIntesection, we should have Distance >= 0
 type IntersectRes struct {
 	HasIntersection bool
@@ -21,6 +23,8 @@ func (I1 *IntersectRes) Update(I2 IntersectRes) {
 type Surface interface {
 	Intersect(Ray) IntersectRes
 	Translate(Vector) Surface
+	Dilate(float64) Surface
+	Rotate(int, float64) Surface
 	Print()
 }
 
@@ -45,7 +49,24 @@ func (obj Object) Translate(v Vector) Object {
 	return Object{surfaces}
 }
 
+func (obj Object) Dilate(t float64) Object {
+	surfaces := []Surface{}
+	for _, surf := range obj.Surfaces {
+		surfaces = append(surfaces, surf.Dilate(t))
+	}
+	return Object{surfaces}
+}
+
+func (obj Object) Rotate(axis int, d float64) Object {
+	surfaces := []Surface{}
+	for _, surf := range obj.Surfaces {
+		surfaces = append(surfaces, surf.Rotate(axis, d))
+	}
+	return Object{surfaces}
+}
+
 func (obj Object) Print() {
+	fmt.Println("Object with following Surfaces:")
 	for _, surf := range obj.Surfaces {
 		surf.Print()
 	}

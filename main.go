@@ -11,6 +11,7 @@ import (
 
 func main() {
 	// testCubeRotated()
+	// testCube()
 	testSphere()
 	// testFaces()
 
@@ -37,9 +38,23 @@ func testSphere() {
 func testCubeRotated() {
 	cube_rotated := ParseStl("assets/cube_rotated.stl", 1, 1, 1, 1)
 
-	cube_rotated = cube_rotated.Translate(Vector{2, 0, 10})
+	cube_rotated = cube_rotated.Translate(Vector{2, 0, 15})
 	scene := NewEmptyScene()
 	scene.AddObjects(cube_rotated)
+	scene.AddLights(Lights...)
+
+	render.Render(&scene)
+}
+
+func testCube() {
+	cube := ParseStl("assets/cube.stl", 1, 1, 1, 1)
+
+	cube = cube.Rotate(YAxis, 90)
+	cube = cube.Rotate(XAxis, 20)
+	cube = cube.Rotate(YAxis, 20)
+	cube = cube.Translate(Vector{2, 0, 15})
+	scene := NewEmptyScene()
+	scene.AddObjects(cube)
 	scene.AddLights(Lights...)
 
 	render.Render(&scene)
@@ -58,7 +73,8 @@ func testFaces() {
 	}
 	for _, face := range listIndex {
 		filename := fmt.Sprintf("assets/faces/%s.stl", face)
-		objects = append(objects, ParseStl(filename, 1, 1, 1, 1))
+		o := ParseStl(filename, 1, 1, 1, 1)
+		objects = append(objects, o)
 	}
 
 	scene := NewEmptyScene()
