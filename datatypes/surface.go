@@ -4,18 +4,20 @@ import "fmt"
 
 // When HasIntesection, we should have Distance >= 0
 type IntersectRes struct {
-	HasIntersection bool
-	Distance        float64
-	Position        Vector
-	Normale         Vector
-	Ka, Kd, Ks      float64
-	A               float64
+	Vector
+	HasIntersection   bool
+	DistanceToOrigine float64
+	Normale           Vector
+	Ka, Kd, Ks        float64
+	A                 float64
 }
 
-var NoIntersection = IntersectRes{false, 0, Vector{0, 0, 0}, Vector{0, 0, 0}, 0, 0, 0, 0}
+var NoIntersection = IntersectRes{}
 
 func (I1 *IntersectRes) Update(I2 IntersectRes) {
-	if !I1.HasIntersection || I2.HasIntersection && I2.Distance < I1.Distance {
+	if !I1.HasIntersection ||
+		I2.HasIntersection &&
+			I2.DistanceToOrigine < I1.DistanceToOrigine {
 		*I1 = I2
 	}
 }

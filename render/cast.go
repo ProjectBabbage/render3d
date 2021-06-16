@@ -13,19 +13,19 @@ func calc_Ia(scene Scene) float64 {
 	return i
 }
 
-func calc_id(inter IntersectRes, scene Scene) float64 {
+func calc_id(iR IntersectRes, scene Scene) float64 {
 	var i float64 = 0
-	p := inter.Position
-	n := inter.Normale
-	kd := inter.Kd
+	p := iR.Vector
+	n := iR.Normale
+	kd := iR.Kd
 	for _, light := range scene.Lights {
 		lm := light.Minus(p).Normalize()
 		imd := light.Id
 		ps := lm.ProdScal(n)
-		SR := NewRay(p, lm) // Shadow Ray
+		SR := NewRay(iR.Vector, lm) // Shadow Ray
 		iSR := scene.Intersect(SR)
 		inShadow := iSR.HasIntersection &&
-			iSR.Position.Distance(p) < light.Distance(p)
+			iSR.DistanceToOrigine < light.Distance(p)
 		if ps > 0 && !inShadow {
 			i += kd * imd * ps
 		}
@@ -33,13 +33,13 @@ func calc_id(inter IntersectRes, scene Scene) float64 {
 	return i
 }
 
-func calc_is(inter IntersectRes, r Ray, scene Scene) float64 {
+func calc_is(iR IntersectRes, r Ray, scene Scene) float64 {
 	var i float64 = 0
-	p := inter.Position
-	n := inter.Normale
-	ks := inter.Ks
+	p := iR.Vector
+	n := iR.Normale
+	ks := iR.Ks
 	v := r.Direction()
-	a := inter.A
+	a := iR.A
 	for _, light := range scene.Lights {
 		lm := light.Minus(p).Normalize()
 		rm := lm.Minus(n.Dilate(2 * n.ProdScal(lm)))
@@ -50,12 +50,12 @@ func calc_is(inter IntersectRes, r Ray, scene Scene) float64 {
 }
 
 func Cast(r Ray, scene Scene) float64 {
-	inter := scene.Intersect(r)
-	if !inter.HasIntersection {
+	iR := scene.Intersect(r)
+	if !iR.HasIntersection {
 		return 0 // no intensity
 	}
-	ia := inter.Ka * calc_Ia(scene)
-	id := calc_id(inter, scene)
+	ia := iR.Ka * calc_Ia(scene)
+	id := calc_id(iR, scene)
 	i := ia + id
 	return i
 }

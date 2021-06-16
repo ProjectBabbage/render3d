@@ -62,12 +62,12 @@ func (t Triangle) Intersect(r Ray) IntersectRes {
 	u := r.Direction()
 	u_n := u.ProdScal(t.n)
 	if u_n >= 0 {
-		return IntersectRes{false, 0, Vector{0, 0, 0}, Vector{0, 0, 0}, 0, 0, 0, 0}
+		return NoIntersection
 	} else {
 		d := t.p1.Minus(x).ProdScal(t.n) / u_n
 		p := x.Add(u.Dilate(d))
 		b := t.contains(p) && d >= 0
-		return IntersectRes{b, d, p, t.n, t.ka, t.kd, t.ks, t.a}
+		return IntersectRes{p, b, d, t.n, t.ka, t.kd, t.ks, t.a}
 	}
 }
 
