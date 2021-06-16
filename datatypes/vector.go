@@ -29,6 +29,10 @@ func (v1 Vector) Minus(v2 Vector) Vector {
 	return Vector{v1.X - v2.X, v1.Y - v2.Y, v1.Z - v2.Z}
 }
 
+func (v1 Vector) Distance(v2 Vector) float64 {
+	return v1.Minus(v2).Norm()
+}
+
 func (v Vector) Dilate(t float64) Vector {
 	return Vector{t * v.X, t * v.Y, t * v.Z}
 }

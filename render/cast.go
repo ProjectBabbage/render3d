@@ -22,8 +22,10 @@ func calc_id(inter IntersectRes, scene Scene) float64 {
 		lm := light.Minus(p).Normalize()
 		imd := light.Id
 		ps := lm.ProdScal(n)
-		shadowRay := NewRay(p, lm)
-		inShadow := scene.Intersect(shadowRay).HasIntersection
+		SR := NewRay(p, lm) // Shadow Ray
+		iSR := scene.Intersect(SR)
+		inShadow := iSR.HasIntersection &&
+			iSR.Position.Distance(p) < light.Distance(p)
 		if ps > 0 && !inShadow {
 			i += kd * imd * ps
 		}
