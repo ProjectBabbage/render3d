@@ -25,8 +25,8 @@ func testSphere() {
 	sphere := ParseStl("assets/sphere.stl", 1, 1, 1, 1)
 	plane := ParseStl("assets/plane.stl", 1, 1, 1, 1)
 
-	sphere.Translate(Vector{0, 0, 10})
-	plane.Translate(Vector{0, 2, 10})
+	sphere.Translate(Vector{0, 0, 12})
+	plane.Translate(Vector{0, 1, 5})
 
 	scene := NewEmptyScene()
 	scene.AddObjects(sphere, plane)

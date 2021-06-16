@@ -5,7 +5,7 @@ import (
 )
 
 // If you don't have a gpu, replace by "cpu"
-const RenderBackend string = "gpu"
+const RenderBackend string = "cpu"
 
 // Eye is at origin
 var Eye = Vector{X: 0, Y: 0, Z: 0}
@@ -18,7 +18,7 @@ const ScreenX float64 = 1
 const ScreenY float64 = 1
 
 // Position of the light
-var Lights = []Light{Light{Vector{-10, -50, -50}, 25, 200, 3}}
+var Lights = []Light{Light{Vector{0, 0, 10}, 25, 200, 0}}
 
 const PixelsY = 1000
 const Ly = -PixelsY / 2
