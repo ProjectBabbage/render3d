@@ -17,11 +17,11 @@ const D float64 = 2
 const ScreenX float64 = 1
 const ScreenY float64 = 1
 
-const PixelsY = 1000
+const PixelsY = 500
 const Ly = -PixelsY / 2
 const Hy = PixelsY / 2
 
-const PixelsX = 1000
+const PixelsX = 500
 const Lx = -PixelsX / 2
 const Hx = PixelsX / 2
 

@@ -8,26 +8,14 @@ import (
 	"testing"
 )
 
+var (
+	WHITE = color.Gray{255}
+	BLACK = color.Gray{0}
+)
+
 func TestMain(m *testing.M) {
 	Path = "../assets/"
 	m.Run()
-}
-
-func TestConvertIndexToScreenIndex(t *testing.T) {
-	PixelsX := 200
-	PixelsY := 100
-
-	var i, j = 10, 20
-	var expected_I, expected_J = 110, 70
-	var I, J int
-	I, J = convertIndexToScreenIndex(i, j, PixelsX, PixelsY)
-	t.Log(i, j)
-	t.Log(I, J)
-
-	if I != expected_I || J != expected_J {
-		t.Errorf("Indexes conversion to Screen Indexes error.")
-	}
-
 }
 
 func TestDisplay1(t *testing.T) {
@@ -36,11 +24,10 @@ func TestDisplay1(t *testing.T) {
 	}
 	var screen = new(Screen)
 	screen.Init() // set every pixel to black
-	var pixelColor = color.White
 	size := 100
 	for i := -size / 2; i < size/2; i++ {
 		for j := 0; j < i; j++ {
-			screen.FillPixel(i, j, pixelColor)
+			screen.FillPixel(i, j, WHITE)
 		}
 	}
 	RenderScreen(*screen)
@@ -55,7 +42,7 @@ func TestDisplay2(t *testing.T) {
 	for i := Lx; i <= Hx; i++ {
 		for j := Ly; j <= Hy; j++ {
 			if i >= 0 && i < j && j < 2*i {
-				screen.FillPixel(i, j, color.White)
+				screen.FillPixel(i, j, WHITE)
 			}
 		}
 	}
@@ -71,7 +58,7 @@ func TestDisplay3(t *testing.T) {
 	for i := Lx; i <= Hx; i++ {
 		for j := Ly; j <= Hy; j++ {
 			if j > i*i {
-				screen.FillPixel(i, j, color.White)
+				screen.FillPixel(i, j, WHITE)
 			}
 		}
 	}

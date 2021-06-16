@@ -1,6 +1,8 @@
-# broengine
+# Broengine
 
-Coordinate system: 
+BroEngine / BrosEngine ? whatever. Made by two bros.
+
+# Coordinate system: 
     Origin is where the Eye is (0, 0, 0)
 
     -------------> X
@@ -36,3 +38,5 @@ then do `go run main.go`
 Run the tests with `go test -v ./...`
 
 Run the benchs (and tests) with `go test -v ./... -bench`
+
+Run the tests without display tests with `go test -short ./... -v`
