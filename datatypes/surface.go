@@ -105,3 +105,14 @@ func (s *Scene) TranslateObjects(v Vector) {
 func (s Scene) Intersect(r Ray) IntersectRes {
 	return s.objects.Intersect(r)
 }
+
+func (s Scene) Print() {
+	fmt.Println("OBJECTS:")
+	for _, surface := range s.objects.Surfaces {
+		surface.Print()
+	}
+	fmt.Println("LIGHTS:")
+	for _, light := range s.Lights {
+		fmt.Printf("%+v", light)
+	}
+}

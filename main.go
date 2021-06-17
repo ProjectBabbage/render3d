@@ -10,15 +10,20 @@ import (
 )
 
 func main() {
-	// testCubeRotated()
-	// testCube()
-	// stored.TestSphere()
-	// testFaces()
+	// render.Render(SSphere())
+	render.Render(SSpherePlane())
+	// render.Render(SSpherePlaneShadow())
+	// render.Render(SCubeRotated())
+	// render.Render(SCubeManuallyRotated())
 
-	// triangleTest()
-	// displayTest()
-	// displayTest1()
-	// displayTest2()
+	// scene := SFaces("front", "bottom", "left", "right", "front", "back")
+	// scene.Print()
+	// scene.TranslateObjects(Vector{3, -3, 0})
+	// render.Render(scene)
 
-	render.Render(SCubePlane())
+	// scene := SSimpleTriangle()
+	// ray := NewRay(Vector{2, 2, 0}, Vector{0, 0, 1})
+	// intensity := render.Cast(ray, scene)
+	// fmt.Println(intensity)
+
 }

@@ -8,6 +8,11 @@ import (
 	"testing"
 )
 
+func TestMain(m *testing.M) {
+	Path = "../assets/"
+	m.Run()
+}
+
 func TestConvertIndexToScreenIndex(t *testing.T) {
 	PixelsX := 200
 	PixelsY := 100
@@ -75,22 +80,17 @@ func TestDisplay3(t *testing.T) {
 
 // ~ 5ms/op
 func BenchmarkCastSphere(b *testing.B) {
-	sphere := ParseStl("../assets/sphere.stl", 1, 1, 1, 1)
-	sphere.Translate(Vector{0, 0, 10})
-	scene := NewEmptyScene()
-	scene.AddObjects(sphere)
-	scene.AddLights(L1)
+	scene := SSphere()
+	r := NewRay(Vector{}, Vector{})
 
-	r := NewRay(Vector{0, 0, 0}, Vector{0, 0, 0})
 	for i := 0; i < b.N; i++ {
 		Cast(r, scene)
 	}
 }
 
 // ~ 8 seconds
-func BenchmarkCastAllCubePlane(b *testing.B) {
-	Path = "../assets/"
-	scene := SCubePlane()
+func BenchmarkCastAllSpherePlane(b *testing.B) {
+	scene := SSpherePlane()
 	for i := 0; i < b.N; i++ {
 		CastAll(scene)
 	}

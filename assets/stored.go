@@ -12,7 +12,19 @@ var L3 = Light{Vector{0, 0, 10}, 25, 200, 0}
 
 var Path = "assets/"
 
-func SCubePlane() Scene {
+func SSphere() Scene {
+	sphere := ParseStl(Path+"sphere.stl", 1, 1, 1, 1)
+
+	sphere.Translate(Vector{0, 0, 12})
+
+	scene := NewEmptyScene()
+	scene.AddObjects(sphere)
+	scene.AddLights(L1)
+
+	return scene
+}
+
+func SSpherePlane() Scene {
 	sphere := ParseStl(Path+"sphere.stl", 1, 1, 1, 1)
 	plane := ParseStl(Path+"plane.stl", 1, 1, 1, 1)
 
@@ -26,7 +38,7 @@ func SCubePlane() Scene {
 	return scene
 }
 
-func SCubePlaneShadow() Scene {
+func SSpherePlaneShadow() Scene {
 	sphere := ParseStl(Path+"sphere.stl", 1, 1, 1, 1)
 	plane := ParseStl(Path+"plane.stl", 1, 1, 1, 1)
 
@@ -64,14 +76,6 @@ func SCubeManuallyRotated() Scene {
 }
 
 func SFaces(listIndex ...string) Scene {
-	// 	listIndex := []string{
-	// 	"top",
-	// 	"front",
-	// 	"back",
-	// 	"right",
-	// 	"left",
-	// 	"bottom",
-	// }
 	var objects = []Object{}
 
 	for _, face := range listIndex {
@@ -82,7 +86,7 @@ func SFaces(listIndex ...string) Scene {
 	scene := NewEmptyScene()
 	scene.AddObjects(objects...)
 	scene.AddLights(L1)
-	scene.TranslateObjects(Vector{0, 0, 10})
+	scene.TranslateObjects(Vector{0, 0, 20})
 
 	return scene
 }
@@ -99,16 +103,7 @@ func SSimpleTriangle() Scene {
 	scene := NewEmptyScene()
 	scene.AddObjects(o)
 	scene.AddLights(L2)
-
-	// scene = scene.Translate(Vector{4, -4, 40})
-	// var screen = new(render.Screen)
-	// screen.Init() // set to black every pixel
-
-	// ray := NewRay(Vector{2, 2, 0}, Vector{0, 0, 1})
-	// intensity := render.Cast(ray, scene)
-	// c := color.Gray16{uint16(intensity)}
-	// fmt.Println(intensity)
-	// screen.FillPixel(0, 0, c)
+	scene.TranslateObjects(Vector{4, -4, 40})
 
 	return scene
 }
