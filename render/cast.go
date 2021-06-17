@@ -1,7 +1,9 @@
 package render
 
 import (
+	"broengine/config"
 	. "broengine/datatypes"
+	"image/color"
 	"math"
 )
 
@@ -58,4 +60,19 @@ func Cast(r Ray, scene Scene) float64 {
 	id := calc_id(iR, scene)
 	i := ia + id
 	return i
+}
+
+func CastAll(scene Scene) Screen {
+	var screen = new(Screen)
+	screen.Init() // set every pixel to black
+
+	for i := config.Lx; i <= config.Hx; i++ {
+		for j := config.Ly; j <= config.Hy; j++ {
+			ray := NewRay(config.Eye, config.Pxy(i, j))
+			intensity := Cast(ray, scene)
+			c := color.Gray{uint8(intensity)}
+			screen.FillPixel(i, j, c)
+		}
+	}
+	return *screen
 }

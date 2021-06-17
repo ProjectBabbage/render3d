@@ -5,18 +5,16 @@ import (
 	"fmt"
 )
 
-var Sphere80 = ParseStl("../assets/sphere.stl", 1, 1, 1, 1)
-var Cube12 = ParseStl("../assets/cube.stl", 1, 1, 1, 1)
-var CubeRotated12 = ParseStl("../assets/cube_rotated.stl", 1, 1, 1, 1)
-var Plane2 = ParseStl("../assets/plane.stl", 1, 1, 1, 1)
-
-var L1 = Light{Vector{0, -50, -50}, 30, 250, 3}
+var L0 = Light{Vector{0, -50, -50}, 30, 250, 3}
+var L1 = Light{Vector{0, -50, -50}, 30, 200, 0}
 var L2 = Light{Vector{0, 0, -50}, 15, 100, 3}
 var L3 = Light{Vector{0, 0, 10}, 25, 200, 0}
 
+var Path = "assets/"
+
 func SCubePlane() Scene {
-	sphere := Sphere80
-	plane := Plane2
+	sphere := ParseStl(Path+"sphere.stl", 1, 1, 1, 1)
+	plane := ParseStl(Path+"plane.stl", 1, 1, 1, 1)
 
 	sphere.Translate(Vector{0, 0, 12})
 	plane.Translate(Vector{0, 1, 5})
@@ -29,8 +27,8 @@ func SCubePlane() Scene {
 }
 
 func SCubePlaneShadow() Scene {
-	sphere := Sphere80
-	plane := Plane2
+	sphere := ParseStl(Path+"sphere.stl", 1, 1, 1, 1)
+	plane := ParseStl(Path+"plane.stl", 1, 1, 1, 1)
 
 	sphere.Translate(Vector{0, 0, 12})
 	plane.Translate(Vector{0, 1, 5})
@@ -43,7 +41,7 @@ func SCubePlaneShadow() Scene {
 }
 
 func SCubeRotated() Scene {
-	cube_rotated := CubeRotated12
+	cube_rotated := ParseStl(Path+"cube_rotated.stl", 1, 1, 1, 1)
 
 	cube_rotated.Translate(Vector{2, 0, 15})
 	scene := NewEmptyScene()
@@ -54,7 +52,7 @@ func SCubeRotated() Scene {
 }
 
 func SCubeManuallyRotated() Scene {
-	cube := Cube12
+	cube := ParseStl(Path+"cube.stl", 1, 1, 1, 1)
 	cube.Rotate(XAxis, 20)
 	cube.Rotate(YAxis, 20)
 	cube.Translate(Vector{2, 0, 15})
@@ -77,7 +75,7 @@ func SFaces(listIndex ...string) Scene {
 	var objects = []Object{}
 
 	for _, face := range listIndex {
-		filename := fmt.Sprintf("assets/faces/%s.stl", face)
+		filename := fmt.Sprintf(Path+"faces/%s.stl", face)
 		o := ParseStl(filename, 1, 1, 1, 1)
 		objects = append(objects, o)
 	}

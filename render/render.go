@@ -2,13 +2,12 @@ package render
 
 import (
 	"broengine/config"
+	"broengine/datatypes"
 	"fmt"
-
 	"github.com/veandco/go-sdl2/sdl"
 )
 
-// Render the screen
-func Rendering(screen *Screen) {
+func RenderScreen(screen Screen) {
 	// INIT SDL
 	if err := sdl.Init(sdl.INIT_EVERYTHING); err != nil {
 		panic(err)
@@ -72,4 +71,9 @@ func Rendering(screen *Screen) {
 			}
 		}
 	}
+}
+
+func Render(scene datatypes.Scene) {
+	screen := CastAll(scene)
+	RenderScreen(screen)
 }
