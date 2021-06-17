@@ -17,9 +17,6 @@ const D float64 = 2
 const ScreenX float64 = 1
 const ScreenY float64 = 1
 
-// Position of the light
-var Lights = []Light{Light{Vector{0, 0, 10}, 25, 200, 0}}
-
 const PixelsY = 1000
 const Ly = -PixelsY / 2
 const Hy = PixelsY / 2
