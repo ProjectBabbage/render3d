@@ -1,6 +1,8 @@
 package datatypes
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // Assume P1, P2, P3 to be distinct and N to be normalized
 type Triangle struct {
@@ -66,6 +68,7 @@ func (t Triangle) Intersect(r Ray) IntersectRes {
 	} else {
 		d := t.p1.Minus(x).ProdScal(t.n) / u_n
 		p := x.Add(u.Dilate(d))
+
 		b := t.contains(p) && d >= 0
 		return IntersectRes{p, b, d, t.n, t.ka, t.kd, t.ks, t.a}
 	}

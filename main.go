@@ -2,11 +2,7 @@ package main
 
 import (
 	. "broengine/assets"
-	// . "broengine/config"
-	// . "broengine/datatypes"
 	"broengine/render"
-	// "fmt"
-	// "image/color"
 )
 
 func main() {

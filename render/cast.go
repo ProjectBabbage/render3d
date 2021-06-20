@@ -1,9 +1,9 @@
+// https://en.wikipedia.org/wiki/Phong_reflection_model
 package render
 
 import (
 	"broengine/config"
 	. "broengine/datatypes"
-	"image/color"
 	"math"
 )
 
@@ -46,7 +46,13 @@ func calc_is(iR IntersectRes, r Ray, scene Scene) float64 {
 		lm := light.Minus(p).Normalize()
 		rm := lm.Minus(n.Dilate(2 * n.ProdScal(lm)))
 		ims := light.Is
-		i += ks * ims * math.Pow(rm.ProdScal(v), a)
+
+		ps := rm.ProdScal(v)
+		shadowRay := NewRay(p, lm)
+		inShadow := scene.Intersect(shadowRay).HasIntersection
+		if ps > 0 && !inShadow {
+			i += ks * ims * math.Pow(ps, a)
+		}
 	}
 	return i
 }
@@ -59,6 +65,10 @@ func Cast(r Ray, scene Scene) float64 {
 	ia := iR.Ka * calc_Ia(scene)
 	id := calc_id(iR, scene)
 	i := ia + id
+	if id >= 0 {
+		is := calc_is(iR, r, scene)
+		i += is
+	}
 	return i
 }
 
@@ -70,7 +80,7 @@ func CastAll(scene Scene) Screen {
 		for j := config.Ly; j <= config.Hy; j++ {
 			ray := NewRay(config.Eye, config.Pxy(i, j))
 			intensity := Cast(ray, scene)
-			c := color.Gray{uint8(intensity)}
+			c := ConvertIntensityToGrayScale(intensity)
 			screen.FillPixel(i, j, c)
 		}
 	}
