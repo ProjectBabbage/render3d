@@ -7,11 +7,11 @@ import (
 
 func main() {
 	// render.Render(SSphere())
-	render.Render(SSpherePlane())
+	// render.Render(SSpherePlane())
 	// render.Render(SSpherePlaneShadow())
 	// render.Render(SCubeRotated())
 	// render.Render(SCubeManuallyRotated())
-	// render.Render(STrueSpherePlane())
+	render.Render(STrueSpherePlane())
 	// render.Render(STwoTrianglesPlane())
 	// render.Render(STwoTrianglesPlane2())
 

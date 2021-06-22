@@ -11,6 +11,7 @@ var L2 = Light{Vector{0, 0, -50}, 15, 100, 3}
 var L3 = Light{Vector{0, 0, 10}, 25, 200, 0}
 var L4 = Light{Vector{-2, -2, 5}, 30, 100, 150}
 var L5 = Light{Vector{0, 0, 0}, 30, 150, 0}
+var L6 = Light{Vector{-8, 0, 0}, 30, 150, 0}
 
 var Path = "assets/"
 
@@ -118,14 +119,13 @@ func STrueSpherePlane() Scene {
 	sphere := Object{[]Surface{&s}}
 	plane := ParseStl(Path+"plane.stl", 1, 1, 5, 1)
 	plane.Rotate(XAxis, 90)
-	sphere.Rotate(YAxis, -45)
 
-	sphere.Translate(Vector{0, 0, 15})
-	plane.Translate(Vector{0, 2, 30})
+	sphere.Translate(Vector{-1, 0, 10})
+	plane.Translate(Vector{3, 0, 20})
 
 	scene := NewEmptyScene()
 	scene.AddObjects(sphere, plane)
-	scene.AddLights(L5)
+	scene.AddLights(L6)
 
 	return scene
 }
