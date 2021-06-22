@@ -11,6 +11,7 @@ func main() {
 	// render.Render(SSpherePlaneShadow())
 	// render.Render(SCubeRotated())
 	// render.Render(SCubeManuallyRotated())
+	// render.Render(STrueSpherePlane())
 	// render.Render(STwoTrianglesPlane())
 	// render.Render(STwoTrianglesPlane2())
 

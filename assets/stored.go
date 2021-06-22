@@ -111,6 +111,25 @@ func SSimpleTriangle() Scene {
 
 	return scene
 }
+
+func STrueSpherePlane() Scene {
+	// sphere := ParseStl(Path+"sphere.stl", 1, 1, 1, 1)
+	s := NewSphere(Vector{}, 1, 1, 1, 1, 1)
+	sphere := Object{[]Surface{&s}}
+	plane := ParseStl(Path+"plane.stl", 1, 1, 5, 1)
+	plane.Rotate(XAxis, 90)
+	sphere.Rotate(YAxis, -45)
+
+	sphere.Translate(Vector{0, 0, 15})
+	plane.Translate(Vector{0, 2, 30})
+
+	scene := NewEmptyScene()
+	scene.AddObjects(sphere, plane)
+	scene.AddLights(L5)
+
+	return scene
+}
+
 func STwoTrianglesPlane() Scene {
 	triangles := ParseStl(Path+"two_triangles.stl", 1, 1, 1, 1)
 	plane := ParseStl(Path+"plane.stl", 1, 1, 1, 1)
