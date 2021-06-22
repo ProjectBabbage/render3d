@@ -2,7 +2,7 @@
 
 BroEngine / BrosEngine ? whatever. Made by two bros.
 
-# Coordinate system: 
+# Coordinate system:
     Origin is where the Eye is (0, 0, 0)
 
     -------------> X

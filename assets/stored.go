@@ -9,8 +9,8 @@ var L0 = Light{Vector{0, -50, -50}, 30, 250, 3}
 var L1 = Light{Vector{0, -50, -50}, 30, 200, 0}
 var L2 = Light{Vector{0, 0, -50}, 15, 100, 3}
 var L3 = Light{Vector{0, 0, 10}, 25, 200, 0}
-
 var L4 = Light{Vector{-2, -2, 5}, 30, 100, 150}
+var L5 = Light{Vector{0, 0, 0}, 30, 150, 0}
 
 var Path = "assets/"
 
@@ -108,6 +108,49 @@ func SSimpleTriangle() Scene {
 	scene.AddObjects(o)
 	scene.AddLights(L2)
 	scene.TranslateObjects(Vector{4, -4, 40})
+
+	return scene
+}
+func STwoTrianglesPlane() Scene {
+	triangles := ParseStl(Path+"two_triangles.stl", 1, 1, 1, 1)
+	plane := ParseStl(Path+"plane.stl", 1, 1, 1, 1)
+	// plane.Rotate(XAxis, 90)
+	triangles.Rotate(YAxis, -45)
+
+	triangles.Translate(Vector{0, 0, 4})
+	plane.Translate(Vector{0, 2, 10})
+
+	scene := NewEmptyScene()
+	scene.AddObjects(triangles, plane)
+	scene.AddLights(L5)
+	scene.Print()
+
+	return scene
+}
+
+func STwoTrianglesPlane2() Scene {
+
+	q1 := Vector{0.22975452523155737, 0, 3.026750959038924}
+	q2 := Vector{-0.3162252123460546, 0, 3.051315849298438}
+	x := -0.11487165708492686
+	y := 0.49999698996543884
+	z := 3.141625397815853
+	triangle1 := NewTriangle(q1, q2, Vector{x, y, z}, Vector{}, 1, 1, 1, 1)
+	triangle1.RecomputeNormal()
+	triangle2 := NewTriangle(q1, Vector{x, -y, z}, q2, Vector{}, 1, 1, 1, 1)
+	triangle2.RecomputeNormal()
+	triangles := Object{[]Surface{&triangle1, &triangle2}}
+	plane := ParseStl(Path+"plane.stl", 1, 1, 1, 1)
+	// plane.Rotate(XAxis, 90)
+	// triangles.Rotate(YAxis, -45)
+
+	triangles.Translate(Vector{0, 0, 0})
+	plane.Translate(Vector{0, 2, 10})
+
+	scene := NewEmptyScene()
+	scene.AddObjects(triangles, plane)
+	scene.AddLights(L5)
+	scene.Print()
 
 	return scene
 }
