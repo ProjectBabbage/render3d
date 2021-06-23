@@ -24,7 +24,7 @@ func calc_id(iR IntersectRes, scene Scene) float64 {
 		lm := light.Minus(p).Normalize()
 		imd := light.Id
 		ps := lm.ProdScal(n)
-		SR := NewRay(iR.Vector, lm) // Shadow Ray
+		SR := NewRay(p.Add(lm.Dilate(config.Eps)), lm) // Shadow Ray
 		iSR := scene.Intersect(SR)
 		inShadow := iSR.HasIntersection &&
 			iSR.DistanceToOrigine < light.Distance(p)
@@ -48,8 +48,10 @@ func calc_is(iR IntersectRes, r Ray, scene Scene) float64 {
 		ims := light.Is
 
 		ps := rm.ProdScal(v)
-		shadowRay := NewRay(p, lm)
-		inShadow := scene.Intersect(shadowRay).HasIntersection
+		SR := NewRay(p.Add(lm.Dilate(config.Eps)), lm) // Shadow Ray
+		iSR := scene.Intersect(SR)
+		inShadow := iSR.HasIntersection &&
+			iSR.DistanceToOrigine < light.Distance(p)
 		if ps > 0 && !inShadow {
 			i += ks * ims * math.Pow(ps, a)
 		}

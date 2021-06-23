@@ -65,7 +65,7 @@ func TestDisplay3(t *testing.T) {
 	RenderScreen(*screen)
 }
 
-// ~ 5ms/op
+// ~ 6 ms/op
 func BenchmarkCastSphere(b *testing.B) {
 	scene := SSphere()
 	r := NewRay(Vector{}, Vector{})
@@ -75,7 +75,17 @@ func BenchmarkCastSphere(b *testing.B) {
 	}
 }
 
-// ~ 8 seconds
+// ~ 0.3 ms/op
+func BenchmarkCastTrueSphere(b *testing.B) {
+	scene := STrueSphere()
+	r := NewRay(Vector{}, Vector{})
+
+	for i := 0; i < b.N; i++ {
+		Cast(r, scene)
+	}
+}
+
+// ~ 16 s for 500x500 px
 func BenchmarkCastAllSpherePlane(b *testing.B) {
 	scene := SSpherePlane()
 	for i := 0; i < b.N; i++ {
