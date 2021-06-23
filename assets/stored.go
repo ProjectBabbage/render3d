@@ -11,6 +11,8 @@ var L2 = Light{Vector{0, 0, -50}, 15, 100, 3}
 var L3 = Light{Vector{0, 0, 10}, 25, 200, 0}
 var L4 = Light{Vector{-2, -2, 5}, 30, 100, 150}
 var L5 = Light{Vector{0, 0, 0}, 30, 150, 0}
+var L6 = Light{Vector{-8, 0, 0}, 30, 150, 70}
+var L7 = Light{Vector{0, -50, -50}, 30, 150, 70}
 
 var Path = "assets/"
 
@@ -111,6 +113,7 @@ func SSimpleTriangle() Scene {
 
 	return scene
 }
+
 func STwoTrianglesPlane() Scene {
 	triangles := ParseStl(Path+"two_triangles.stl", 1, 1, 1, 1)
 	plane := ParseStl(Path+"plane.stl", 1, 1, 1, 1)
@@ -151,6 +154,35 @@ func STwoTrianglesPlane2() Scene {
 	scene.AddObjects(triangles, plane)
 	scene.AddLights(L5)
 	scene.Print()
+
+	return scene
+}
+
+func STrueSphere() Scene {
+	s := NewSphere(Vector{}, 1, 1, 1, 1, 30)
+	sphere := Object{[]Surface{&s}}
+
+	sphere.Translate(Vector{0, 0, 10})
+
+	scene := NewEmptyScene()
+	scene.AddObjects(sphere)
+	scene.AddLights(L7)
+
+	return scene
+}
+
+func STrueSpherePlane() Scene {
+	s := NewSphere(Vector{}, 1, 1, 1, 1, 30)
+	sphere := Object{[]Surface{&s}}
+	plane := ParseStl(Path+"plane.stl", 1, 1, 1, 1)
+	plane.Rotate(XAxis, 90)
+
+	sphere.Translate(Vector{-1, 0, 10})
+	plane.Translate(Vector{3, 0, 20})
+
+	scene := NewEmptyScene()
+	scene.AddObjects(sphere, plane)
+	scene.AddLights(L6)
 
 	return scene
 }

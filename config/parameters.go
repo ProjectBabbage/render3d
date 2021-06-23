@@ -7,6 +7,9 @@ import (
 // If you don't have a gpu, replace by "cpu"
 const RenderBackend string = "cpu"
 
+// Do the computations modulo Eps(ilon)
+const Eps = 0.0001
+
 // Eye is at origin
 var Eye = Vector{X: 0, Y: 0, Z: 0}
 
