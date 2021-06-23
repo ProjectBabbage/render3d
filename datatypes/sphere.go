@@ -48,10 +48,15 @@ func (s Sphere) Intersect(r Ray) IntersectRes {
 		return NoIntersection
 	}
 	d := d1
+	fromOutside := true
 	if d1 < 0 {
 		d = d2
+		fromOutside = false
 	}
 	p := x.Add(u.Dilate(d))
 	n := p.Minus(s.C).Normalize()
+	if !fromOutside {
+		n = Vector{}.Minus(n)
+	}
 	return IntersectRes{p, true, d, n, s.ka, s.kd, s.ks, s.a}
 }

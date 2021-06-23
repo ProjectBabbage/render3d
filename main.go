@@ -13,8 +13,9 @@ func main() {
 	// render.Render(SCubeManuallyRotated())
 	// render.Render(STwoTrianglesPlane())
 	// render.Render(STwoTrianglesPlane2())
-	render.Render(STrueSphere())
+	// render.Render(STrueSphere())
 	// render.Render(STrueSpherePlane())
+	render.Render(STrueSphereInside())
 
 	// scene := SFaces("front", "bottom", "left", "right", "front", "back")
 	// scene.Print()

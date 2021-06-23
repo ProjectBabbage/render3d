@@ -13,6 +13,7 @@ var L4 = Light{Vector{-2, -2, 5}, 30, 100, 150}
 var L5 = Light{Vector{0, 0, 0}, 30, 150, 0}
 var L6 = Light{Vector{-8, 0, 0}, 30, 150, 70}
 var L7 = Light{Vector{0, -50, -50}, 30, 150, 70}
+var L8 = Light{Vector{-5, -5, -10}, 30, 150, 70}
 
 var Path = "assets/"
 
@@ -183,6 +184,21 @@ func STrueSpherePlane() Scene {
 	scene := NewEmptyScene()
 	scene.AddObjects(sphere, plane)
 	scene.AddLights(L6)
+
+	return scene
+}
+
+func STrueSphereInside() Scene {
+	s1 := NewSphere(Vector{}, 25, 1, 0.2, 1, 30)
+	s2 := NewSphere(Vector{}, 1, 1, 1, 1, 30)
+
+	sphere1 := Object{[]Surface{&s1}}
+	sphere2 := Object{[]Surface{&s2}}
+	sphere2.Translate(Vector{0, 0, 10})
+
+	scene := NewEmptyScene()
+	scene.AddObjects(sphere1, sphere2)
+	scene.AddLights(L8)
 
 	return scene
 }
