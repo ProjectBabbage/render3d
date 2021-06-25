@@ -6,13 +6,14 @@ import (
 
 // Assume P1, P2, P3 to be distinct and N to be normalized
 type Triangle struct {
-	p1, p2, p3    Vector
-	n             Vector
-	ka, kd, ks, a float64
+	p1, p2, p3 Vector
+	n          Vector
+	a          float64
+	ka, kd, ks Col
 }
 
-func NewTriangle(p1, p2, p3, n Vector, ka, kd, ks, a float64) Triangle {
-	return Triangle{p1, p2, p3, n.Normalize(), ka, kd, ks, a}
+func NewTriangle(p1, p2, p3, n Vector, a float64, ka, kd, ks Col) Triangle {
+	return Triangle{p1, p2, p3, n.Normalize(), a, ka, kd, ks}
 }
 
 func (t Triangle) Print() {

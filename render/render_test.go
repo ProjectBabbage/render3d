@@ -4,13 +4,12 @@ import (
 	. "broengine/assets"
 	. "broengine/config"
 	. "broengine/datatypes"
-	"image/color"
 	"testing"
 )
 
 var (
-	WHITE = color.Gray{255}
-	BLACK = color.Gray{0}
+	WHITE = NewCol(255, 255, 255, 255)
+	BLACK = NewCol(0, 0, 0, 255)
 )
 
 func TestMain(m *testing.M) {
