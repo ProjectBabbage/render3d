@@ -7,73 +7,71 @@ import (
 	"math"
 )
 
-func calc_Ia(scene Scene) float64 {
-	var i float64 = 0
-	for _, light := range scene.Lights {
-		i += light.Ia
-	}
-	return i
-}
-
-func calc_id(iR IntersectRes, scene Scene) float64 {
-	var i float64 = 0
+// Compute the pixel intensity associated with the ray that intersected something
+func compute_intensity(iR IntersectRes, r Ray, scene Scene) float64 {
+	var (
+		ia float64 = 0
+		id float64 = 0
+		is float64 = 0
+	)
+	// common
 	p := iR.Vector
 	n := iR.Normale
+
+	// ambient
+	ka := iR.Ka
+
+	// diffuse
 	kd := iR.Kd
-	for _, light := range scene.Lights {
-		lm := light.Minus(p).Normalize()
-		imd := light.Id
-		ps := lm.ProdScal(n)
-		SR := NewRay(p.Add(lm.Dilate(config.Eps)), lm) // Shadow Ray
-		iSR := scene.Intersect(SR)
-		inShadow := iSR.HasIntersection &&
-			iSR.DistanceToOrigine < light.Distance(p)
-		if ps > 0 && !inShadow {
-			i += kd * imd * ps
-		}
-	}
-	return i
-}
 
-func calc_is(iR IntersectRes, r Ray, scene Scene) float64 {
-	var i float64 = 0
-	p := iR.Vector
-	n := iR.Normale
+	// specular
 	ks := iR.Ks
 	v := r.Direction()
 	a := iR.A
+
 	for _, light := range scene.Lights {
+		ia += light.Ia
+
+		// diffuse
 		lm := light.Minus(p).Normalize()
+		imd := light.Id
+		ps_diffuse := lm.ProdScal(n)
+
+		// specular
 		rm := lm.Minus(n.Dilate(2 * n.ProdScal(lm)))
 		ims := light.Is
+		ps_specular := rm.ProdScal(v)
 
-		ps := rm.ProdScal(v)
-		SR := NewRay(p.Add(lm.Dilate(config.Eps)), lm) // Shadow Ray
+		// Shadow Ray
+		SR := NewRay(p.Add(lm.Dilate(config.Eps)), lm)
 		iSR := scene.Intersect(SR)
-		inShadow := iSR.HasIntersection &&
-			iSR.DistanceToOrigine < light.Distance(p)
-		if ps > 0 && !inShadow {
-			i += ks * ims * math.Pow(ps, a)
+		inShadow := iSR.HasIntersection && iSR.DistanceToOrigine < light.Distance(p)
+
+		if !inShadow {
+			if ps_diffuse > 0 {
+				id += imd * ps_diffuse
+			}
+
+			if ps_specular > 0 && ps_diffuse >= 0 {
+				is += ims * math.Pow(ps_specular, a)
+			}
 		}
 	}
-	return i
+
+	return ia*ka + id*kd + is*ks
 }
 
+// Cast a ray in the scene, return its intensity
 func Cast(r Ray, scene Scene) float64 {
 	iR := scene.Intersect(r)
 	if !iR.HasIntersection {
 		return 0 // no intensity
 	}
-	ia := iR.Ka * calc_Ia(scene)
-	id := calc_id(iR, scene)
-	i := ia + id
-	if id >= 0 {
-		is := calc_is(iR, r, scene)
-		i += is
-	}
+	i := compute_intensity(iR, r, scene)
 	return i
 }
 
+// Cast all rays
 func CastAll(scene Scene) Screen {
 	var screen = new(Screen)
 	screen.Init() // set every pixel to black
