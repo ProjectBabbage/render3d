@@ -1,6 +1,6 @@
 # Broengine
 
-BroEngine / BrosEngine ? whatever. Made by two bros.
+3D Rendering from scratch.
 
 # Coordinate system:
     Origin is where the Eye is (0, 0, 0)
@@ -9,16 +9,16 @@ BroEngine / BrosEngine ? whatever. Made by two bros.
     |
     |
     |
-    Y is oriented down (same as SDL)
+    Y is oriented down (same system as SDL)
 
     Z follows the right hand rule (goes up from your eyes to the screen)
 
 
 # Rendering result
 
-A simple sphere (so beautifuul !!)
+A true sphere.
 
-![img](assets/simple_sphere.png)
+![img](assets/img/true_sphere.png)
 
 =======
 # Installation

@@ -1,14 +1,15 @@
-package assets
+package stl
 
 import (
 	. "broengine/datatypes"
 	"fmt"
-	"github.com/hschendel/stl"
 	"log"
+
+	"github.com/hschendel/stl"
 )
 
 // Get the Triangles from a .stl file.
-func ParseStl(filepath string, ka, kd, ks, a float64) Object {
+func Parse(filepath string, ka, kd, ks, a float64) Object {
 
 	s, err := stl.ReadFile(filepath)
 	if err != nil {

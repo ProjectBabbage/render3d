@@ -1,27 +1,33 @@
 package render
 
 import (
-	"broengine/config"
+	. "broengine/config"
 	"image/color"
 )
 
 // Contains the screen pixels (matrice of color)
 type Screen struct {
-	Pixels [config.PixelsX + 1][config.PixelsY + 1]color.Gray
+	// sizes of the screen in pixel
+	PixelsX, PixelsY int
+	// the pixels colors
+	Pixels [][]color.Gray
 }
 
-// set to black every pixel
-func (s *Screen) Init() {
-	for I := 0; I <= config.PixelsX; I++ {
-		for J := 0; J <= config.PixelsY; J++ {
-			s.Pixels[I][J] = color.Gray{0} // That's black
+// Init the screen sizes and set to black every pixel
+// [PixelsX + 1][PixelsY + 1]color.Gray
+func (s *Screen) Init(conf Config) {
+	s.PixelsX, s.PixelsY = conf.PixelsX, conf.PixelsY
+	s.Pixels = make([][]color.Gray, s.PixelsX+1)
+	for I := 0; I <= conf.PixelsX; I++ {
+		for J := 0; J <= conf.PixelsY; J++ {
+			s.Pixels[I] = append(s.Pixels[I], color.Gray{0})
 		}
 	}
 }
 
 // Fill the pixel with the given intensity
 func (s *Screen) FillPixel(i int, j int, color color.Gray) {
-	I, J := convertIndexToScreenIndex(i, j, config.PixelsX, config.PixelsY)
+	I, J := convertIndexToScreenIndex(i, j, s.PixelsX, s.PixelsY)
 	s.Pixels[I][J] = color
 }
 
