@@ -9,7 +9,7 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            // "program": "${fileDirname}"  origibal setting
+            // "program": "${fileDirname}"  original setting
             // launch from the file directory, but we just always
             // want to launch the main.go from the root folder so:
             "program": "${workspaceFolder}/main.go"

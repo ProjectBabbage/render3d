@@ -2,13 +2,13 @@
 package render
 
 import (
-	"broengine/config"
+	. "broengine/config"
 	. "broengine/datatypes"
 	"math"
 )
 
 // Compute the pixel intensity associated with the ray that intersected something
-func compute_intensity(iR IntersectRes, r Ray, scene Scene) float64 {
+func compute_intensity(iR IntersectRes, r Ray, scene Scene, Eps float64) float64 {
 	var (
 		ia float64 = 0
 		id float64 = 0
@@ -43,7 +43,7 @@ func compute_intensity(iR IntersectRes, r Ray, scene Scene) float64 {
 		ps_specular := rm.ProdScal(v)
 
 		// Shadow Ray
-		SR := NewRay(p.Add(lm.Dilate(config.Eps)), lm)
+		SR := NewRay(p.Add(lm.Dilate(Eps)), lm)
 		iSR := scene.Intersect(SR)
 		inShadow := iSR.HasIntersection && iSR.DistanceToOrigine < light.Distance(p)
 
@@ -62,24 +62,24 @@ func compute_intensity(iR IntersectRes, r Ray, scene Scene) float64 {
 }
 
 // Cast a ray in the scene, return its intensity
-func Cast(r Ray, scene Scene) float64 {
+func Cast(r Ray, scene Scene, Eps float64) float64 {
 	iR := scene.Intersect(r)
 	if !iR.HasIntersection {
 		return 0 // no intensity
 	}
-	i := compute_intensity(iR, r, scene)
+	i := compute_intensity(iR, r, scene, Eps)
 	return i
 }
 
 // Cast all rays
-func CastAll(scene Scene) Screen {
+func CastAll(scene Scene, conf Config) Screen {
 	var screen = new(Screen)
-	screen.Init() // set every pixel to black
+	screen.Init(conf) // set every pixel to black
 
-	for i := config.Lx; i <= config.Hx; i++ {
-		for j := config.Ly; j <= config.Hy; j++ {
-			ray := NewRay(config.Eye, config.Pxy(i, j))
-			intensity := Cast(ray, scene)
+	for i := conf.Lx; i <= conf.Hx; i++ {
+		for j := conf.Ly; j <= conf.Hy; j++ {
+			ray := NewRay(conf.Eye, conf.Pxy(i, j))
+			intensity := Cast(ray, scene, conf.Eps)
 			c := ConvertIntensityToGrayScale(intensity)
 			screen.FillPixel(i, j, c)
 		}
