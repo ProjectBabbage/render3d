@@ -8,7 +8,9 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 )
 
-func RenderScreen(screen Screen, conf Config) {
+func RenderScreen(screen *Screen, conf Config) {
+	s := screen.MeanScreen(conf.Msaa)
+
 	// INIT SDL
 	if err := sdl.Init(sdl.INIT_EVERYTHING); err != nil {
 		panic(err)
@@ -17,7 +19,7 @@ func RenderScreen(screen Screen, conf Config) {
 
 	window, err := sdl.CreateWindow(
 		"test", sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED,
-		int32(conf.PixelsX+1), int32(conf.PixelsY+1),
+		int32(s.PixelsX+1), int32(s.PixelsY+1),
 		sdl.WINDOW_SHOWN,
 	)
 	if err != nil {
@@ -34,9 +36,9 @@ func RenderScreen(screen Screen, conf Config) {
 	if conf.RenderBackend != "gpu" {
 		fmt.Println("Using the CPU")
 		// SET THE SCREEN ON THE SURFACE AND UPDATE
-		for I := 0; I <= conf.PixelsX; I++ {
-			for J := 0; J <= conf.PixelsY; J++ {
-				var pixelColor = screen.Pixels[I][J]
+		for I := 0; I <= s.PixelsX; I++ {
+			for J := 0; J <= s.PixelsY; J++ {
+				var pixelColor = s.Pixels[I][J]
 				surface.Set(I, J, pixelColor)
 			}
 		}
@@ -50,9 +52,9 @@ func RenderScreen(screen Screen, conf Config) {
 		}
 
 		// SET THE SCREEN ON THE SURFACE AND UPDATE
-		for I := 0; I <= conf.PixelsX; I++ {
-			for J := 0; J <= conf.PixelsY; J++ {
-				r, g, b, a := screen.Pixels[I][J].RGBA()
+		for I := 0; I <= s.PixelsX; I++ {
+			for J := 0; J <= s.PixelsY; J++ {
+				r, g, b, a := s.Pixels[I][J].RGBA()
 				rend.SetDrawColor(uint8(r), uint8(g), uint8(b), uint8(a))
 				rend.DrawPoint(int32(I), int32(J))
 			}
@@ -76,5 +78,5 @@ func RenderScreen(screen Screen, conf Config) {
 
 func Render(scene datatypes.Scene, conf Config) {
 	screen := CastAll(scene, conf)
-	RenderScreen(screen, conf)
+	RenderScreen(&screen, conf)
 }
