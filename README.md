@@ -2,7 +2,8 @@
 
 3D Rendering from scratch.
 
-# Coordinate system:
+## Coordinate system:
+
     Origin is where the Eye is (0, 0, 0)
 
     -------------> X
@@ -13,15 +14,13 @@
 
     Z follows the right hand rule (goes up from your eyes to the screen)
 
-
-# Rendering result
+## Rendering result
 
 A true sphere.
 
 ![img](assets/img/true_sphere.png)
 
-=======
-# Installation
+## Installation
 
 Install golang, then:
 (Ubuntu working example)
@@ -32,11 +31,23 @@ go install
 ```
 then do `go run main.go`
 
-=======
-# Testing
+## Testing
 
 Run the tests with `go test -v ./...`
 
 Run the benchs (and tests) with `go test -v ./... -bench`
 
 Run the tests without display tests with `go test -short ./... -v`
+
+Run a specific test (here called TestNewScreen):
+
+`go test -run TestNewScreen broengine/render`
+
+you must specify the package it's in (broegine/render)
+
+## Documentation
+
+To generate a package doc (render package here), do:
+```
+go doc -all render
+```

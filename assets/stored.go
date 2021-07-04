@@ -182,7 +182,7 @@ func STwoTrianglesPlane2() (Scene, Config) {
 }
 
 func STrueSphere() (Scene, Config) {
-	conf := NewConfig(Config{})
+	conf := NewConfig(Config{Msaa: 1})
 
 	s := NewSphere(Vector{}, 1, 1, 1, 1, 30)
 	sphere := Object{[]Surface{&s}}
@@ -215,7 +215,7 @@ func STrueSpherePlane() (Scene, Config) {
 }
 
 func STrueSphereInside() (Scene, Config) {
-	conf := NewConfig(Config{})
+	conf := NewConfig(Config{Msaa: 1})
 
 	s1 := NewSphere(Vector{}, 25, 1, 0.2, 1, 30)
 	s2 := NewSphere(Vector{}, 1, 1, 1, 1, 30)

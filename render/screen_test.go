@@ -1,6 +1,7 @@
 package render
 
 import (
+	"image/color"
 	"testing"
 )
 
@@ -19,6 +20,61 @@ func TestConvertIndexToScreenIndex(t *testing.T) {
 		t.Errorf("Indexes conversion to Screen Indexes error.")
 	}
 
+}
+
+func TestNewScreen(t *testing.T) {
+	ns := NewScreen(100, 200)
+	if ns.PixelsX != 100 || ns.PixelsY != 200 {
+		t.Error("Error, new screen size is wrong")
+	}
+	if len(ns.Pixels) != 101 || len(ns.Pixels[0]) != 201 {
+		t.Error("Error, ns.Pixels length is wrong ")
+	}
+	if ns.Pixels[0][0].Y != 0 {
+		t.Error("Error, the initial color of the screen is not black.")
+	}
+}
+
+func TestMeanScreenSize(t *testing.T) {
+	ns := NewScreen(100, 200)
+	ms := ns.MeanScreen(2)
+
+	if ms.PixelsX != 50 || ms.PixelsY != 100 {
+		t.Error("Error, mean screen size is wrong")
+	}
+	// real screen is one more pixels bigger
+	// I think we should change that
+	if len(ms.Pixels) != 51 || len(ms.Pixels[0]) != 101 {
+		t.Error("Error, ms.Pixels double array length is wrong (", len(ms.Pixels), len(ms.Pixels[0]), ")")
+		t.Error("Expected (101 201)")
+	}
+}
+
+// intensity is an int
+func TestMeanScreenIntensity(t *testing.T) {
+	ns := NewScreen(2, 2)
+	ns.Pixels = [][]color.Gray{
+		{color.Gray{1}, color.Gray{2}},
+		{color.Gray{1}, color.Gray{1}},
+	}
+
+	ms := ns.MeanScreen(2)
+
+	if ms.Pixels[0][0].Y != 1 {
+		t.Error("Intensity mean should be 1, instead it was:", ms.Pixels[0][0])
+	}
+
+	ns2 := NewScreen(2, 2)
+	ns2.Pixels = [][]color.Gray{
+		{color.Gray{1}, color.Gray{3}},
+		{color.Gray{1}, color.Gray{3}},
+	}
+
+	ms2 := ns2.MeanScreen(2)
+
+	if ms2.Pixels[0][0].Y != 2 {
+		t.Error("Intensity mean should be 2, instead it was:", ms2.Pixels[0][0])
+	}
 }
 
 func TestConvertIntensityToGrayScale(t *testing.T) {

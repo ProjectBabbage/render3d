@@ -22,15 +22,15 @@ func TestDisplay1(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping Display tests in short mode")
 	}
-	var screen = new(Screen)
-	screen.Init(NewConfig(Config{})) // set every pixel to black
+	conf := NewConfig(Config{})
+	var screen = NewScreen(conf.PixelsX, conf.PixelsY)
 	size := 100
 	for i := -size / 2; i < size/2; i++ {
 		for j := 0; j < i; j++ {
 			screen.FillPixel(i, j, WHITE)
 		}
 	}
-	RenderScreen(*screen, NewConfig(Config{}))
+	RenderScreen(&screen, NewConfig(Config{}))
 }
 
 func TestDisplay2(t *testing.T) {
@@ -39,16 +39,15 @@ func TestDisplay2(t *testing.T) {
 	}
 
 	conf := NewConfig(Config{})
-	var screen = new(Screen)
-	screen.Init(conf) // set every pixel to black
-	for i := conf.Lx; i <= conf.Hx; i++ {
-		for j := conf.Ly; j <= conf.Hy; j++ {
+	var screen = NewScreen(conf.PixelsX, conf.PixelsY)
+	for i := conf.Lx(); i <= conf.Hx(); i++ {
+		for j := conf.Ly(); j <= conf.Hy(); j++ {
 			if i >= 0 && i < j && j < 2*i {
 				screen.FillPixel(i, j, WHITE)
 			}
 		}
 	}
-	RenderScreen(*screen, conf)
+	RenderScreen(&screen, conf)
 }
 
 func TestDisplay3(t *testing.T) {
@@ -57,16 +56,15 @@ func TestDisplay3(t *testing.T) {
 	}
 
 	conf := NewConfig(Config{})
-	var screen = new(Screen)
-	screen.Init(conf) // set every pixel to black
-	for i := conf.Lx; i <= conf.Hx; i++ {
-		for j := conf.Ly; j <= conf.Hy; j++ {
+	var screen = NewScreen(conf.PixelsX, conf.PixelsY)
+	for i := conf.Lx(); i <= conf.Hx(); i++ {
+		for j := conf.Ly(); j <= conf.Hy(); j++ {
 			if j > i*i {
 				screen.FillPixel(i, j, WHITE)
 			}
 		}
 	}
-	RenderScreen(*screen, conf)
+	RenderScreen(&screen, conf)
 }
 
 // ~ 6 ms/op
