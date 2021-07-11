@@ -13,7 +13,6 @@ var (
 )
 
 func TestMain(m *testing.M) {
-	StlPath = "../assets/"
 	m.Run()
 }
 
