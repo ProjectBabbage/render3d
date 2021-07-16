@@ -30,7 +30,7 @@ func TestNewScreen(t *testing.T) {
 	if len(ns.Pixels) != 101 || len(ns.Pixels[0]) != 201 {
 		t.Error("Error, ns.Pixels length is wrong ")
 	}
-	if !ns.Pixels[0][0].Equal(NewCol(0, 0, 0, 0)) {
+	if !ns.Pixels[0][0].Equal(Col{0, 0, 0}) {
 		t.Error("Error, the initial color of the screen is not black.")
 	}
 }
@@ -54,12 +54,12 @@ func TestMeanScreenSize(t *testing.T) {
 func TestMeanScreenIntensity(t *testing.T) {
 	ns := NewScreen(2, 2)
 	ns.Pixels = [][]Col{
-		{NewCol(1, 1, 1, 1), NewCol(2, 2, 2, 2)},
-		{NewCol(1, 1, 1, 1), NewCol(1, 1, 1, 1)},
+		{Col{1, 1, 1}, Col{2, 2, 2}},
+		{Col{1, 1, 1}, Col{1, 1, 1}},
 	}
 
 	ms := ns.MeanScreen(2)
-	expected_col1 := NewCol(1, 1, 1, 1)
+	expected_col1 := Col{1, 1, 1}
 
 	if !ms.Pixels[0][0].Equal(expected_col1) {
 		t.Error("Color mean should be ", expected_col1, "instead it was:", ms.Pixels[0][0])
@@ -68,12 +68,12 @@ func TestMeanScreenIntensity(t *testing.T) {
 	ns2 := NewScreen(2, 2)
 
 	ns2.Pixels = [][]Col{
-		{NewCol(1, 1, 1, 1), NewCol(3, 3, 3, 3)},
-		{NewCol(1, 1, 1, 1), NewCol(3, 3, 3, 3)},
+		{Col{1, 1, 1}, Col{3, 3, 3}},
+		{Col{1, 1, 1}, Col{3, 3, 3}},
 	}
 
 	ms2 := ns2.MeanScreen(2)
-	expected_col2 := NewCol(2, 2, 2, 2)
+	expected_col2 := Col{2, 2, 2}
 
 	if !ms2.Pixels[0][0].Equal(expected_col2) {
 		t.Error("Color mean should be", expected_col2, "instead it was:", ms2.Pixels[0][0])

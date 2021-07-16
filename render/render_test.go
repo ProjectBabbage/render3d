@@ -8,11 +8,12 @@ import (
 )
 
 var (
-	WHITE = NewCol(255, 255, 255, 255)
-	BLACK = NewCol(0, 0, 0, 255)
+	WHITE = Col{255, 255, 255}
+	BLACK = Col{0, 0, 0}
 )
 
 func TestMain(m *testing.M) {
+	FilesPath = "../assets/stl/files/"
 	m.Run()
 }
 
