@@ -4,7 +4,6 @@ import (
 	. "broengine/config"
 	"broengine/datatypes"
 	"fmt"
-
 	"github.com/veandco/go-sdl2/sdl"
 )
 

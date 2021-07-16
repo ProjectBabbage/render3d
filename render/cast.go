@@ -8,11 +8,11 @@ import (
 )
 
 // compute the pixel intensity associated with the ray that intersected something.
-func compute_intensity(iR IntersectRes, r Ray, scene Scene, Eps float64) float64 {
+func compute_intensity(iR IntersectRes, r Ray, scene Scene, Eps float64) Col {
 	var (
-		ia float64 = 0
-		id float64 = 0
-		is float64 = 0
+		ia = Col{}
+		id = Col{}
+		is = Col{}
 	)
 	// common
 	p := iR.Vector
@@ -30,7 +30,7 @@ func compute_intensity(iR IntersectRes, r Ray, scene Scene, Eps float64) float64
 	a := iR.A
 
 	for _, light := range scene.Lights {
-		ia += light.Ia
+		ia = ia.AddColor(light.Ia)
 
 		// diffuse
 		lm := light.Minus(p).Normalize()
@@ -49,23 +49,23 @@ func compute_intensity(iR IntersectRes, r Ray, scene Scene, Eps float64) float64
 
 		if !inShadow {
 			if ps_diffuse > 0 {
-				id += imd * ps_diffuse
+				id = id.AddColor(imd.DilateColor(ps_diffuse))
 			}
 
 			if ps_specular > 0 && ps_diffuse >= 0 {
-				is += ims * math.Pow(ps_specular, a)
+				is = is.AddColor(ims.DilateColor(math.Pow(ps_specular, a)))
 			}
 		}
 	}
 
-	return ia*ka + id*kd + is*ks
+	return ia.MulColor(ka).AddColor(id.MulColor(kd)).AddColor(is.MulColor(ks))
 }
 
 // Cast a ray in the scene, return its intensity.
-func Cast(r Ray, scene Scene, Eps float64) float64 {
+func Cast(r Ray, scene Scene, Eps float64) Col {
 	iR := scene.Intersect(r)
 	if !iR.HasIntersection {
-		return 0 // no intensity
+		return Col{} // no intensity
 	}
 	i := compute_intensity(iR, r, scene, Eps)
 	return i
@@ -78,8 +78,7 @@ func CastAll(scene Scene, conf Config) Screen {
 	for i := conf.Lx(); i <= conf.Hx(); i++ {
 		for j := conf.Ly(); j <= conf.Hy(); j++ {
 			ray := NewRay(conf.Eye, conf.Pxy(i, j))
-			intensity := Cast(ray, scene, conf.Eps)
-			c := ConvertIntensityToGrayScale(intensity)
+			c := Cast(ray, scene, conf.Eps)
 			screen.FillPixel(i, j, c)
 		}
 	}

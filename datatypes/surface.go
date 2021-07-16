@@ -1,6 +1,8 @@
 package datatypes
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // When HasIntesection, we should have Distance >= 0
 type IntersectRes struct {
@@ -8,7 +10,7 @@ type IntersectRes struct {
 	HasIntersection   bool
 	DistanceToOrigine float64
 	Normale           Vector
-	Ka, Kd, Ks        float64
+	Ka, Kd, Ks        Col
 	A                 float64
 }
 

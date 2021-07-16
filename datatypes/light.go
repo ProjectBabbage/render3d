@@ -2,5 +2,5 @@ package datatypes
 
 type Light struct {
 	Vector
-	Ia, Id, Is float64
+	Ia, Id, Is Col
 }

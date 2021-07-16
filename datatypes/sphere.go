@@ -6,13 +6,14 @@ import (
 )
 
 type Sphere struct {
-	C             Vector
-	R             float64
-	ka, kd, ks, a float64
+	C          Vector
+	R          float64
+	a          float64
+	ka, kd, ks Col
 }
 
-func NewSphere(c Vector, r, ka, kd, ks, a float64) Sphere {
-	return Sphere{c, r, ka, kd, ks, a}
+func NewSphere(c Vector, r, a float64, ka, kd, ks Col) Sphere {
+	return Sphere{c, r, a, ka, kd, ks}
 }
 
 func (s Sphere) Print() {

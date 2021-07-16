@@ -9,7 +9,8 @@ import (
 )
 
 // Get the Triangles from a .stl file.
-func Parse(filepath string, ka, kd, ks, a float64) Object {
+
+func Parse(filepath string, a float64, ka, kd, ks Col) Object {
 
 	s, err := stl.ReadFile(filepath)
 	if err != nil {
@@ -18,18 +19,18 @@ func Parse(filepath string, ka, kd, ks, a float64) Object {
 	}
 	var triangles []Surface = make([]Surface, len(s.Triangles))
 	for i := 0; i < len(s.Triangles); i++ {
-		tri := convertTriangle(s.Triangles[i], ka, kd, ks, a)
+		tri := convertTriangle(s.Triangles[i], a, ka, kd, ks)
 		triangles[i] = &tri
 	}
 	return Object{triangles}
 }
 
-func convertTriangle(t stl.Triangle, ka, kd, ks, a float64) Triangle {
+func convertTriangle(t stl.Triangle, a float64, ka, kd, ks Col) Triangle {
 	return NewTriangle(
 		convertVector(t.Vertices[0]),
 		convertVector(t.Vertices[1]),
 		convertVector(t.Vertices[2]),
-		convertVector(t.Normal), ka, kd, ks, a)
+		convertVector(t.Normal), a, ka, kd, ks)
 }
 
 func convertVector(v stl.Vec3) Vector {
