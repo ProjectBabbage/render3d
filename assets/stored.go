@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-var c0 = NewCol(0, 0, 0, 0)
+var c0 = Col{0, 0, 0}
 
-var ca1 = NewCol(30, 50, 40, 1)
-var ca2 = NewCol(50, 30, 40, 1)
-var ca3 = NewCol(30, 40, 50, 1)
+var ca1 = Col{30, 50, 40}
+var ca2 = Col{50, 30, 40}
+var ca3 = Col{30, 40, 50}
 var ca1b = ca1.DilateColor(.5)
 var ca2b = ca2.DilateColor(.5)
 var ca3b = ca3.DilateColor(.5)
 
-var cd1 = NewCol(100, 250, 100, 1)
-var cd2 = NewCol(200, 100, 100, 1)
-var cd3 = NewCol(100, 200, 100, 1)
+var cd1 = Col{100, 250, 100}
+var cd2 = Col{200, 100, 100}
+var cd3 = Col{100, 200, 100}
 var cd1b = cd1.DilateColor(.5)
 var cd2b = cd2.DilateColor(.5)
 var cd3b = cd3.DilateColor(.5)
 
-var cs1 = NewCol(70, 20, 110, 1)
-var cs2 = NewCol(70, 60, 20, 1)
-var cs3 = NewCol(20, 90, 90, 1)
+var cs1 = Col{70, 20, 110}
+var cs2 = Col{70, 60, 20}
+var cs3 = Col{20, 90, 90}
 
-var c = NewCol(1, 1, 1, 1)
+var c = Col{1, 1, 1}
 
-func red(x uint8) Col   { return NewCol(x, 0, 0, 1) }
-func green(x uint8) Col { return NewCol(0, x, 0, 1) }
-func blue(x uint8) Col  { return NewCol(0, 0, x, 1) }
-func all(x uint8) Col   { return NewCol(x, x, x, 1) }
+func red(x int) Col   { return Col{x, 0, 0} }
+func green(x int) Col { return Col{0, x, 0} }
+func blue(x int) Col  { return Col{0, 0, x} }
+func all(x int) Col   { return Col{x, x, x} }
 
 var L0 = Light{Vector{0, -50, -50}, ca1, cd1, c0}
 var L1 = Light{Vector{0, -50, -50}, ca1, cd2, c0}
@@ -248,7 +248,7 @@ func STrueSpherePlane() (Scene, Config) {
 func STrueSphereInside() (Scene, Config) {
 	conf := NewConfig(Config{Msaa: 3})
 
-	s1 := NewSphere(Vector{}, 25, 30, NewCol(0, 1, 1, 1), c, c)
+	s1 := NewSphere(Vector{}, 25, 30, Col{0, 1, 1}, c, c)
 	s2 := NewSphere(Vector{}, 1, 30, c, c, c)
 
 	sphere1 := Object{[]Surface{&s1}}
@@ -258,7 +258,7 @@ func STrueSphereInside() (Scene, Config) {
 	scene := NewEmptyScene()
 	scene.AddObjects(sphere1, sphere2)
 	var L1 = Light{Vector{-5, -5, 0}, red(20), red(150), c0}
-	var L2 = Light{Vector{3, 3, 0}, NewCol(50, 100, 50, 255), blue(100), c0}
+	var L2 = Light{Vector{3, 3, 0}, Col{50, 100, 50}, blue(100), c0}
 	scene.AddLights(L1, L2)
 
 	return scene, conf
@@ -267,7 +267,7 @@ func STrueSphereInside() (Scene, Config) {
 func STrueSphereInsideNonIsoChannels() (Scene, Config) {
 	conf := NewConfig(Config{Msaa: 3})
 
-	s1 := NewSphere(Vector{}, 25, 30, NewCol(0, 1, 1, 1), c, c)
+	s1 := NewSphere(Vector{}, 25, 30, Col{0, 1, 1}, c, c)
 	s2 := NewSphere(Vector{}, 1, 30, c, c, c)
 
 	sphere1 := Object{[]Surface{&s1}}
@@ -277,7 +277,7 @@ func STrueSphereInsideNonIsoChannels() (Scene, Config) {
 	scene := NewEmptyScene()
 	scene.AddObjects(sphere1, sphere2)
 	var L1 = Light{Vector{-5, -5, 0}, red(20), red(150), c0}
-	var L2 = Light{Vector{3, 3, 0}, NewCol(50, 100, 50, 255), blue(100), c0}
+	var L2 = Light{Vector{3, 3, 0}, Col{50, 100, 50}, blue(100), c0}
 	scene.AddLights(L1, L2)
 
 	return scene, conf

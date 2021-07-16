@@ -20,7 +20,7 @@ func NewScreen(Px, Py int) Screen {
 	s.Pixels = make([][]datatypes.Col, s.PixelsX+1)
 	for I := 0; I <= s.PixelsX; I++ {
 		for J := 0; J <= s.PixelsY; J++ {
-			s.Pixels[I] = append(s.Pixels[I], datatypes.NewCol(0, 0, 0, 0))
+			s.Pixels[I] = append(s.Pixels[I], datatypes.Col{})
 		}
 	}
 	return s
@@ -52,15 +52,15 @@ func (S *Screen) MeanScreen(msaa int) Screen {
 
 	for I := 0; I < newS.PixelsX; I++ {
 		for J := 0; J < newS.PixelsY; J++ {
-			// compute the mean intensity
-			var allColors = []datatypes.Col{}
+			// compute the mean color
+			var col = datatypes.Col{}
 			for i := 0; i < msaa; i++ {
 				for j := 0; j < msaa; j++ {
-					allColors = append(allColors, S.Pixels[I*msaa+i][J*msaa+j])
+					col = col.AddColor(S.Pixels[I*msaa+i][J*msaa+j])
 				}
 			}
 
-			newS.Pixels[I][J] = datatypes.MeanColor(allColors)
+			newS.Pixels[I][J] = col.DilateColor(1. / (float64(msaa) * float64(msaa)))
 		}
 	}
 	return newS

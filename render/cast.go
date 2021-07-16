@@ -78,9 +78,7 @@ func CastAll(scene Scene, conf Config) Screen {
 	for i := conf.Lx(); i <= conf.Hx(); i++ {
 		for j := conf.Ly(); j <= conf.Hy(); j++ {
 			ray := NewRay(conf.Eye, conf.Pxy(i, j))
-			intensity := Cast(ray, scene, conf.Eps)
-			// ugly, probably should remove a
-			c := FixedACol(intensity)
+			c := Cast(ray, scene, conf.Eps)
 			screen.FillPixel(i, j, c)
 		}
 	}
