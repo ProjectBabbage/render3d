@@ -4,14 +4,17 @@ import (
 	"fmt"
 )
 
-// When HasIntesection, we should have Distance >= 0
+// Do the computations modulo Eps(ilon)
+const Eps = 0.00001
+
+// When HasIntesection, we should have DistanceToOrigin >= 0
 type IntersectRes struct {
 	Vector
-	HasIntersection   bool
-	DistanceToOrigine float64
-	Normale           Vector
-	Ka, Kd, Ks        Col
-	A                 float64
+	HasIntersection  bool
+	DistanceToOrigin float64
+	Normale          Vector
+	Ka, Kd, Ks       Col
+	A                float64
 }
 
 var NoIntersection = IntersectRes{}
@@ -19,7 +22,7 @@ var NoIntersection = IntersectRes{}
 func (I1 *IntersectRes) Update(I2 IntersectRes) {
 	if !I1.HasIntersection ||
 		I2.HasIntersection &&
-			I2.DistanceToOrigine < I1.DistanceToOrigine {
+			I2.DistanceToOrigin < I1.DistanceToOrigin {
 		*I1 = I2
 	}
 }

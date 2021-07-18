@@ -8,7 +8,7 @@ import (
 )
 
 // compute the pixel intensity associated with the ray that intersected something.
-func compute_intensity(iR IntersectRes, r Ray, scene Scene, Eps float64) Col {
+func compute_intensity(iR IntersectRes, r Ray, scene Scene) Col {
 	var (
 		ia = Col{}
 		id = Col{}
@@ -45,7 +45,7 @@ func compute_intensity(iR IntersectRes, r Ray, scene Scene, Eps float64) Col {
 		// Shadow Ray
 		SR := NewRay(p.Add(lm.Dilate(Eps)), lm)
 		iSR := scene.Intersect(SR)
-		inShadow := iSR.HasIntersection && iSR.DistanceToOrigine < light.Distance(p)
+		inShadow := iSR.HasIntersection && iSR.DistanceToOrigin < light.Distance(p)
 
 		if !inShadow {
 			if ps_diffuse > 0 {
@@ -62,12 +62,12 @@ func compute_intensity(iR IntersectRes, r Ray, scene Scene, Eps float64) Col {
 }
 
 // Cast a ray in the scene, return its intensity.
-func Cast(r Ray, scene Scene, Eps float64) Col {
+func Cast(r Ray, scene Scene) Col {
 	iR := scene.Intersect(r)
 	if !iR.HasIntersection {
 		return Col{} // no intensity
 	}
-	i := compute_intensity(iR, r, scene, Eps)
+	i := compute_intensity(iR, r, scene)
 	return i
 }
 
@@ -78,7 +78,7 @@ func CastAll(scene Scene, conf Config) Screen {
 	for i := conf.Lx(); i <= conf.Hx(); i++ {
 		for j := conf.Ly(); j <= conf.Hy(); j++ {
 			ray := NewRay(conf.Eye, conf.Pxy(i, j))
-			c := Cast(ray, scene, conf.Eps)
+			c := Cast(ray, scene)
 			screen.FillPixel(i, j, c)
 		}
 	}

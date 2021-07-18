@@ -68,21 +68,21 @@ func TestDisplay3(t *testing.T) {
 
 // ~ 6 ms/op
 func BenchmarkCastSphere(b *testing.B) {
-	scene, conf := SSphere()
+	scene, _ := SSphere()
 	r := NewRay(Vector{}, Vector{})
 
 	for i := 0; i < b.N; i++ {
-		Cast(r, scene, conf.Eps)
+		Cast(r, scene)
 	}
 }
 
 // ~ 0.3 ms/op
 func BenchmarkCastTrueSphere(b *testing.B) {
-	scene, conf := STrueSphere()
+	scene, _ := STrueSphere()
 	r := NewRay(Vector{}, Vector{})
 
 	for i := 0; i < b.N; i++ {
-		Cast(r, scene, conf.Eps)
+		Cast(r, scene)
 	}
 }
 

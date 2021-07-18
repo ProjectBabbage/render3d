@@ -45,7 +45,7 @@ func isSameSide(x, p1, p2, p3 Vector) bool {
 	v := p3.Minus(p1)
 	v = v.Orthogonalize(u)
 	vx := x.Minus(p1)
-	b := vx.ProdScal(v) >= 0
+	b := vx.ProdScal(v) >= -Eps
 	return b
 }
 

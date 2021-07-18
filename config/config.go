@@ -9,8 +9,6 @@ type Config struct {
 	RenderBackend string
 	// Anti-aliasing
 	Msaa int
-	// Do the computations modulo Eps(ilon)
-	Eps float64
 	// Where is the Eye
 	Eye Vector
 	// z-Position of the screen
@@ -32,7 +30,6 @@ func NewConfig(override_conf Config) Config {
 
 	config := Config{
 		RenderBackend: "cpu",
-		Eps:           0.0001,
 		Msaa:          1,
 		// Eye is at origin
 		Eye:     Vector{X: 0, Y: 0, Z: 0},
@@ -44,9 +41,6 @@ func NewConfig(override_conf Config) Config {
 	// TODO there must be a cleaner way to do this:
 	if override_conf.RenderBackend != "" {
 		config.RenderBackend = override_conf.RenderBackend
-	}
-	if override_conf.Eps != 0 {
-		config.Eps = override_conf.Eps
 	}
 	if override_conf.Eye.X != 0 && override_conf.Eye.Y != 0 && override_conf.Eye.Z != 0 {
 		config.Eye = override_conf.Eye
