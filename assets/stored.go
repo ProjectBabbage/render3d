@@ -29,6 +29,15 @@ var cs3 = Col{20, 90, 90}
 
 var c = Col{1, 1, 1}
 
+var mat0 = Material{
+	A:  1,
+	Ka: c, Kd: c, Ks: c,
+}
+var matSphere = Material{
+	A:  30,
+	Ka: c, Kd: c, Ks: c,
+}
+
 func red(x int) Col   { return Col{x, 0, 0} }
 func green(x int) Col { return Col{0, x, 0} }
 func blue(x int) Col  { return Col{0, 0, x} }
@@ -56,7 +65,7 @@ func SSphere() (Scene, Config) {
 		PixelsY: 500,
 	})
 
-	sphere := stl.Parse(FilesPath+"sphere.stl", 1, c, c, c)
+	sphere := stl.Parse(FilesPath+"sphere.stl", mat0)
 
 	sphere.Translate(Vector{0, 0, 12})
 
@@ -70,9 +79,18 @@ func SSphere() (Scene, Config) {
 func SSpherePlane() (Scene, Config) {
 	conf := NewConfig(Config{})
 
-	sphere := stl.Parse(FilesPath+"sphere_high_definition.stl", 1, c0, c, c0)
-	sphere2 := stl.Parse(FilesPath+"sphere.stl", 1, c0, c, c0)
-	plane := stl.Parse(FilesPath+"plane.stl", 1, c, c, c0)
+	mat1 := Material{
+		A:  1,
+		Ka: c0, Kd: c, Ks: c0,
+	}
+	mat2 := Material{
+		A:  1,
+		Ka: c, Kd: c, Ks: c0,
+	}
+
+	sphere := stl.Parse(FilesPath+"sphere_high_definition.stl", mat1)
+	sphere2 := stl.Parse(FilesPath+"sphere.stl", mat1)
+	plane := stl.Parse(FilesPath+"plane.stl", mat2)
 
 	sphere.Translate(Vector{1, 0, 8})
 	sphere2.Translate(Vector{-0.5, -1, 9})
@@ -88,8 +106,8 @@ func SSpherePlane() (Scene, Config) {
 func SSpherePlaneShadow() (Scene, Config) {
 	conf := NewConfig(Config{})
 
-	sphere := stl.Parse(FilesPath+"sphere.stl", 1, c, c, c)
-	plane := stl.Parse(FilesPath+"plane.stl", 1, c, c, c)
+	sphere := stl.Parse(FilesPath+"sphere.stl", mat0)
+	plane := stl.Parse(FilesPath+"plane.stl", mat0)
 
 	sphere.Translate(Vector{0, 0, 12})
 	plane.Translate(Vector{0, 1, 7})
@@ -104,7 +122,7 @@ func SSpherePlaneShadow() (Scene, Config) {
 func SCubeRotated() (Scene, Config) {
 	conf := NewConfig(Config{})
 
-	cube_rotated := stl.Parse(FilesPath+"cube_rotated.stl", 1, c, c, c)
+	cube_rotated := stl.Parse(FilesPath+"cube_rotated.stl", mat0)
 
 	cube_rotated.Translate(Vector{2, 0, 15})
 	scene := NewEmptyScene()
@@ -117,7 +135,7 @@ func SCubeRotated() (Scene, Config) {
 func SCubeManuallyRotated() (Scene, Config) {
 	conf := NewConfig(Config{})
 
-	cube := stl.Parse(FilesPath+"cube.stl", 1, c, c, c)
+	cube := stl.Parse(FilesPath+"cube.stl", mat0)
 	cube.Rotate(XAxis, 20)
 	cube.Rotate(YAxis, 20)
 	cube.Translate(Vector{2, 0, 15})
@@ -135,7 +153,7 @@ func SFaces(listIndex ...string) (Scene, Config) {
 
 	for _, face := range listIndex {
 		filename := fmt.Sprintf(FilesPath+"faces/%s.stl", face)
-		o := stl.Parse(filename, 1, c, c, c)
+		o := stl.Parse(filename, mat0)
 		objects = append(objects, o)
 	}
 	scene := NewEmptyScene()
@@ -153,7 +171,7 @@ func SSimpleTriangle() (Scene, Config) {
 	p1 := Vector{0, 0, distance}
 	p2 := Vector{0, 25, distance}
 	p3 := Vector{25, 0, distance}
-	newTriangle := NewTriangle(p1, p2, p3, Vector{0, 0, 0}, 1, c, c, c)
+	newTriangle := NewTriangle(p1, p2, p3, Vector{0, 0, 0}, mat0)
 	newTriangle.RecomputeNormal()
 	o := Object{[]Surface{&newTriangle}}
 
@@ -168,8 +186,8 @@ func SSimpleTriangle() (Scene, Config) {
 func STwoTrianglesPlane() (Scene, Config) {
 	conf := NewConfig(Config{})
 
-	triangles := stl.Parse(FilesPath+"two_triangles.stl", 1, c, c, c)
-	plane := stl.Parse(FilesPath+"plane.stl", 1, c, c, c)
+	triangles := stl.Parse(FilesPath+"two_triangles.stl", mat0)
+	plane := stl.Parse(FilesPath+"plane.stl", mat0)
 	// plane.Rotate(XAxis, 90)
 	triangles.Rotate(YAxis, -45)
 
@@ -192,12 +210,12 @@ func STwoTrianglesPlane2() (Scene, Config) {
 	x := -0.11487165708492686
 	y := 0.49999698996543884
 	z := 3.141625397815853
-	triangle1 := NewTriangle(q1, q2, Vector{x, y, z}, Vector{}, 1, c, c, c)
+	triangle1 := NewTriangle(q1, q2, Vector{x, y, z}, Vector{}, mat0)
 	triangle1.RecomputeNormal()
-	triangle2 := NewTriangle(q1, Vector{x, -y, z}, q2, Vector{}, 1, c, c, c)
+	triangle2 := NewTriangle(q1, Vector{x, -y, z}, q2, Vector{}, mat0)
 	triangle2.RecomputeNormal()
 	triangles := Object{[]Surface{&triangle1, &triangle2}}
-	plane := stl.Parse(FilesPath+"plane.stl", 1, c, c, c)
+	plane := stl.Parse(FilesPath+"plane.stl", mat0)
 	// plane.Rotate(XAxis, 90)
 	// triangles.Rotate(YAxis, -45)
 
@@ -215,7 +233,7 @@ func STwoTrianglesPlane2() (Scene, Config) {
 func STrueSphere() (Scene, Config) {
 	conf := NewConfig(Config{Msaa: 1})
 
-	s := NewSphere(Vector{}, 1, 30, c, c, c)
+	s := NewSphere(Vector{}, 1, matSphere)
 	sphere := Object{[]Surface{&s}}
 
 	sphere.Translate(Vector{0, 0, 10})
@@ -230,9 +248,9 @@ func STrueSphere() (Scene, Config) {
 func STrueSpherePlane() (Scene, Config) {
 	conf := NewConfig(Config{})
 
-	s := NewSphere(Vector{}, 1, 30, c, c, c)
+	s := NewSphere(Vector{}, 1, matSphere)
 	sphere := Object{[]Surface{&s}}
-	plane := stl.Parse(FilesPath+"plane.stl", 1, c, c, c)
+	plane := stl.Parse(FilesPath+"plane.stl", mat0)
 	plane.Rotate(XAxis, 90)
 
 	sphere.Translate(Vector{-1, 0, 10})
@@ -248,8 +266,13 @@ func STrueSpherePlane() (Scene, Config) {
 func STrueSphereInside() (Scene, Config) {
 	conf := NewConfig(Config{Msaa: 3})
 
-	s1 := NewSphere(Vector{}, 25, 30, Col{0, 1, 1}, c, c)
-	s2 := NewSphere(Vector{}, 1, 30, c, c, c)
+	mat := Material{
+		A:  30,
+		Ka: Col{0, 1, 1}, Kd: c, Ks: c,
+	}
+
+	s1 := NewSphere(Vector{}, 25, mat)
+	s2 := NewSphere(Vector{}, 1, matSphere)
 
 	sphere1 := Object{[]Surface{&s1}}
 	sphere2 := Object{[]Surface{&s2}}
@@ -267,8 +290,13 @@ func STrueSphereInside() (Scene, Config) {
 func STrueSphereInsideNonIsoChannels() (Scene, Config) {
 	conf := NewConfig(Config{Msaa: 3})
 
-	s1 := NewSphere(Vector{}, 25, 30, Col{0, 1, 1}, c, c)
-	s2 := NewSphere(Vector{}, 1, 30, c, c, c)
+	mat := Material{
+		A:  30,
+		Ka: Col{0, 1, 1}, Kd: c, Ks: c,
+	}
+
+	s1 := NewSphere(Vector{}, 25, mat)
+	s2 := NewSphere(Vector{}, 1, matSphere)
 
 	sphere1 := Object{[]Surface{&s1}}
 	sphere2 := Object{[]Surface{&s2}}
@@ -285,8 +313,19 @@ func STrueSphereInsideNonIsoChannels() (Scene, Config) {
 
 func STrueSphereInside2() (Scene, Config) {
 	conf := NewConfig(Config{Msaa: 1})
-	s1 := NewSphere(Vector{}, 25, 30, red(1), red(1), red(1))
-	s2 := NewSphere(Vector{}, 1, 30, blue(1), blue(1), blue(1))
+
+	redmat := Material{
+		A:  30,
+		Ka: red(1), Kd: red(1), Ks: red(1),
+	}
+
+	bluemat := Material{
+		A:  30,
+		Ka: blue(1), Kd: blue(1), Ks: blue(1),
+	}
+
+	s1 := NewSphere(Vector{}, 25, redmat)
+	s2 := NewSphere(Vector{}, 1, bluemat)
 
 	sphere1 := Object{[]Surface{&s1}}
 	sphere2 := Object{[]Surface{&s2}}

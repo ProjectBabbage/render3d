@@ -21,15 +21,20 @@ func compute_intensity(iR IntersectRes, r Ray, scene Scene) Col {
 	n := iR.Normale
 
 	// ambient
-	ka := iR.Ka
+	ka := iR.Mat.Ka
 
 	// diffuse
-	kd := iR.Kd
+	kd := iR.Mat.Kd
 
 	// specular
-	ks := iR.Ks
+	ks := iR.Mat.Ks
 	v := r.Direction()
-	a := iR.A
+	a := iR.Mat.A
+
+	// reflection
+	// kr := iR.Kr
+	// new_direction := v.Minus(n.Dilate(2 * v.ProdScal(n)))
+	// new_ray := Ray{p, new_direction}
 
 	for _, light := range scene.Lights {
 		ia = ia.AddColor(light.Ia)
@@ -58,6 +63,8 @@ func compute_intensity(iR IntersectRes, r Ray, scene Scene) Col {
 				is = is.AddColor(ims.DilateColor(math.Pow(ps_specular, a)))
 			}
 		}
+
+		// reflection
 	}
 
 	return ia.MulColor(ka).AddColor(id.MulColor(kd)).AddColor(is.MulColor(ks))

@@ -8,12 +8,11 @@ import (
 type Triangle struct {
 	p1, p2, p3 Vector
 	n          Vector
-	a          float64
-	ka, kd, ks Col
+	mat        Material
 }
 
-func NewTriangle(p1, p2, p3, n Vector, a float64, ka, kd, ks Col) Triangle {
-	return Triangle{p1, p2, p3, n.Normalize(), a, ka, kd, ks}
+func NewTriangle(p1, p2, p3, n Vector, mat Material) Triangle {
+	return Triangle{p1, p2, p3, n.Normalize(), mat}
 }
 
 func (t Triangle) Print() {
@@ -70,16 +69,8 @@ func (t Triangle) Intersect(r Ray) IntersectRes {
 	d := t.p1.Minus(x).ProdScal(t.n) / u_n
 	p := x.Add(u.Dilate(d))
 	b := t.contains(p) && d >= 0
-	return IntersectRes{p, b, d, t.n, t.ka, t.kd, t.ks, t.a}
+	return IntersectRes{p, b, d, t.n, t.mat}
 }
-
-// func ConvertTriangleListIntoSurfaceList(triangles []Triangle) []Surface {
-// 	var surfaces = []Surface{}
-// 	for _, triangle := range triangles {
-// 		surfaces = append(surfaces, triangle)
-// 	}
-// 	return surfaces
-// }
 
 func (t *Triangle) RecomputeNormal() {
 	u := t.p2.Minus(t.p1)

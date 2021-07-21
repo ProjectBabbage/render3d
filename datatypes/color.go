@@ -6,12 +6,6 @@ type Col struct {
 	R, G, B int
 }
 
-func (c1 Col) Equal(c2 Col) bool {
-	return c1.R == c2.R &&
-		c1.G == c2.G &&
-		c1.B == c2.B
-}
-
 func capuint(i int) uint8 {
 	switch {
 	case i <= 0:

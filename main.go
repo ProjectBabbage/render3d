@@ -14,8 +14,8 @@ func main() {
 	// render.Render(STwoTrianglesPlane())
 	// render.Render(STwoTrianglesPlane2())
 	// render.Render(STrueSphere())
-	// render.Render(STrueSpherePlane())
-	render.Render(STrueSphereInsideNonIsoChannels())
+	render.Render(STrueSpherePlane())
+	// render.Render(STrueSphereInsideNonIsoChannels())
 
 	// render.Render(STrueSphereInside2())
 
