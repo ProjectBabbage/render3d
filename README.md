@@ -33,11 +33,11 @@ then do `go run main.go`
 
 ## Testing
 
-Run the tests with `go test -v ./...`
+Run the tests with `go test ./...`
 
-Run the benchs (and tests) with `go test -v ./... -bench .`
+Run the benchs (and tests) with `go test ./... -bench .`
 
-Run the tests without display tests with `go test -short ./... -v`
+Run the tests without display tests with `go test -short ./...`
 
 Run a specific test (here called TestNewScreen):
 

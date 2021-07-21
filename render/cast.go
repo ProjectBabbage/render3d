@@ -5,6 +5,8 @@ import (
 	. "broengine/config"
 	. "broengine/datatypes"
 	"math"
+	"runtime"
+	"sync"
 )
 
 // compute the pixel intensity associated with the ray that intersected something.
@@ -71,16 +73,36 @@ func Cast(r Ray, scene Scene) Col {
 	return i
 }
 
-// Cast all rays.
-func CastAll(scene Scene, conf Config) Screen {
-	screen := NewScreen(conf.PixelsX, conf.PixelsY) // set every pixel to black
-
-	for i := conf.Lx(); i <= conf.Hx(); i++ {
+func CastWorker(i1, i2 int, screen *Screen, scene Scene, conf Config, wg *sync.WaitGroup) {
+	for i := i1; i < i2; i++ {
 		for j := conf.Ly(); j <= conf.Hy(); j++ {
 			ray := NewRay(conf.Eye, conf.Pxy(i, j))
 			c := Cast(ray, scene)
 			screen.FillPixel(i, j, c)
 		}
 	}
+	wg.Done()
+}
+
+// Cast all rays.
+func CastAll(scene Scene, conf Config) Screen {
+	screen := NewScreen(conf.PixelsX, conf.PixelsY) // set every pixel to black
+
+	var wg sync.WaitGroup
+
+	nbSlices := runtime.GOMAXPROCS(0) * 10
+	L := conf.PixelsX / nbSlices
+	i1 := conf.Lx()
+	i2 := i1 + L
+	wg.Add(nbSlices)
+	for k := 0; k < nbSlices; k++ {
+		go CastWorker(i1, i2, &screen, scene, conf, &wg)
+		i1 = i1 + L
+		i2 = i2 + L
+		if k == nbSlices-2 {
+			i2 = conf.Hx() + 1
+		}
+	}
+	wg.Wait()
 	return screen
 }

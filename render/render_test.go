@@ -86,7 +86,7 @@ func BenchmarkCastTrueSphere(b *testing.B) {
 	}
 }
 
-// ~ 16 s for 500x500 px
+// ~ 5 s for 500x500 px
 func BenchmarkCastAllSpherePlane(b *testing.B) {
 	scene, conf := SSpherePlane()
 	for i := 0; i < b.N; i++ {
