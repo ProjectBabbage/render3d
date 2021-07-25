@@ -8,7 +8,7 @@ import (
 type Triangle struct {
 	p1, p2, p3 Vector
 	n          Vector
-	mat        Material
+	Material
 }
 
 func NewTriangle(p1, p2, p3, n Vector, mat Material) Triangle {
@@ -69,7 +69,7 @@ func (t Triangle) Intersect(r Ray) IntersectRes {
 	d := t.p1.Minus(x).ProdScal(t.n) / u_n
 	p := x.Add(u.Dilate(d))
 	b := t.contains(p) && d >= 0
-	return IntersectRes{p, b, d, t.n, t.mat}
+	return IntersectRes{p, b, d, t.n, t.Material}
 }
 
 func (t *Triangle) RecomputeNormal() {

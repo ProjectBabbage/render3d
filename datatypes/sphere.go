@@ -6,9 +6,9 @@ import (
 )
 
 type Sphere struct {
-	C   Vector
-	R   float64
-	mat Material
+	C Vector
+	R float64
+	Material
 }
 
 func NewSphere(c Vector, r float64, mat Material) Sphere {
@@ -58,5 +58,5 @@ func (s Sphere) Intersect(r Ray) IntersectRes {
 	if !fromOutside {
 		n = Vector{}.Minus(n)
 	}
-	return IntersectRes{p, true, d, n, s.mat}
+	return IntersectRes{p, true, d, n, s.Material}
 }

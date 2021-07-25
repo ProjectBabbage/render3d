@@ -17,6 +17,8 @@ type Config struct {
 	ScreenX, ScreenY float64
 	// Size of the screen in pixel
 	PixelsX, PixelsY int
+	// Reflection and Refraction bounce limit
+	MaxBounces int
 }
 
 // Create a default config, overriding default config fields with
@@ -36,6 +38,7 @@ func NewConfig(override_conf Config) Config {
 		D:       2,
 		ScreenX: 1, ScreenY: 1,
 		PixelsX: PixelsX, PixelsY: PixelsY,
+		MaxBounces: 2,
 	}
 
 	// TODO there must be a cleaner way to do this:
@@ -64,6 +67,9 @@ func NewConfig(override_conf Config) Config {
 		config.Msaa = override_conf.Msaa
 		config.PixelsX *= override_conf.Msaa
 		config.PixelsY *= override_conf.Msaa
+	}
+	if override_conf.MaxBounces != 0 {
+		config.MaxBounces = override_conf.MaxBounces
 	}
 
 	return config

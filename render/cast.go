@@ -21,20 +21,15 @@ func compute_intensity(iR IntersectRes, r Ray, scene Scene) Col {
 	n := iR.Normale
 
 	// ambient
-	ka := iR.Mat.Ka
+	ka := iR.Material.Ka
 
 	// diffuse
-	kd := iR.Mat.Kd
+	kd := iR.Material.Kd
 
 	// specular
-	ks := iR.Mat.Ks
+	ks := iR.Material.Ks
 	v := r.Direction()
-	a := iR.Mat.A
-
-	// reflection
-	// kr := iR.Kr
-	// new_direction := v.Minus(n.Dilate(2 * v.ProdScal(n)))
-	// new_ray := Ray{p, new_direction}
+	a := iR.Material.A
 
 	for _, light := range scene.Lights {
 		ia = ia.AddColor(light.Ia)
@@ -64,27 +59,34 @@ func compute_intensity(iR IntersectRes, r Ray, scene Scene) Col {
 			}
 		}
 
-		// reflection
 	}
 
 	return ia.MulColor(ka).AddColor(id.MulColor(kd)).AddColor(is.MulColor(ks))
 }
 
 // Cast a ray in the scene, return its intensity.
-func Cast(r Ray, scene Scene) Col {
+func Cast(r Ray, scene Scene, maxBounces int) Col {
 	iR := scene.Intersect(r)
-	if !iR.HasIntersection {
-		return Col{} // no intensity
+	if !iR.HasIntersection || maxBounces == 0 {
+		return Col{}
 	}
-	i := compute_intensity(iR, r, scene)
-	return i
+	intensity := compute_intensity(iR, r, scene)
+	// compute the reflected ray
+	p := iR.Vector
+	n := iR.Normale
+	v := r.Direction()
+	reflected_direction := v.Minus(n.Dilate(2 * v.ProdScal(n)))
+	reflected_ray := NewRay(p.Add(reflected_direction.Dilate(Eps)), reflected_direction)
+	// TODO compute the refracted ray
+
+	return intensity.AddColor(Cast(reflected_ray, scene, maxBounces-1).PropDilateColor(iR.Material.Kr))
 }
 
 func CastWorker(i1, i2 int, screen *Screen, scene Scene, conf Config, wg *sync.WaitGroup) {
 	for i := i1; i < i2; i++ {
 		for j := conf.Ly(); j <= conf.Hy(); j++ {
 			ray := NewRay(conf.Eye, conf.Pxy(i, j))
-			c := Cast(ray, scene)
+			c := Cast(ray, scene, conf.MaxBounces)
 			screen.FillPixel(i, j, c)
 		}
 	}

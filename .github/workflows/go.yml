@@ -18,6 +18,9 @@ jobs:
       with:
         go-version: 1.16
         
+    - name: Update Ubuntu
+      run: sudo apt update
+
     - name: Download SDL2
       run: sudo apt install libsdl2-2.0-0 libsdl2-dev
     

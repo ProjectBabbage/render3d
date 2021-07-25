@@ -1,7 +1,7 @@
 package render
 
 import (
-	. "broengine/assets"
+	. "broengine/assets/stored"
 	. "broengine/config"
 	. "broengine/datatypes"
 	"testing"
@@ -13,7 +13,6 @@ var (
 )
 
 func TestMain(m *testing.M) {
-	FilesPath = "../assets/stl/files/"
 	m.Run()
 }
 
@@ -72,7 +71,7 @@ func BenchmarkCastSphere(b *testing.B) {
 	r := NewRay(Vector{}, Vector{})
 
 	for i := 0; i < b.N; i++ {
-		Cast(r, scene)
+		Cast(r, scene, 1)
 	}
 }
 
@@ -82,13 +81,13 @@ func BenchmarkCastTrueSphere(b *testing.B) {
 	r := NewRay(Vector{}, Vector{})
 
 	for i := 0; i < b.N; i++ {
-		Cast(r, scene)
+		Cast(r, scene, 1)
 	}
 }
 
 // ~ 5 s for 500x500 px
 func BenchmarkCastAllSpherePlane(b *testing.B) {
-	scene, conf := SSpherePlane()
+	scene, conf := STwoSpheresOnePlane()
 	for i := 0; i < b.N; i++ {
 		CastAll(scene, conf)
 	}
