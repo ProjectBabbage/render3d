@@ -18,7 +18,7 @@ func TestCapuint(t *testing.T) {
 func TestIsEqual(t *testing.T) {
 	c1 := Col{12, 12, 12}
 	c2 := Col{12, 12, 12}
-	if !c1.Equal(c2) {
+	if c1 != c2 {
 		t.Errorf("Error, should be equal.")
 	}
 }

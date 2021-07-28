@@ -12,7 +12,12 @@ func TestParser(t *testing.T) {
 	isoChannelsKd := Col{100, 100, 100}
 	isoChannelsKs := Col{100, 100, 100}
 
-	triangles := Parse("files/cube.stl", 1, isoChannelsKa, isoChannelsKd, isoChannelsKs)
+	mat := Material{
+		A:  1,
+		Ka: isoChannelsKa, Kd: isoChannelsKd, Ks: isoChannelsKs,
+	}
+
+	triangles := Parse("files/cube.stl", mat)
 	var surfaces = triangles.Surfaces
 	if surfaces == nil {
 		t.Error("couln't read the file with the third party library")

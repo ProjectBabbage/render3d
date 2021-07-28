@@ -13,8 +13,7 @@ type IntersectRes struct {
 	HasIntersection  bool
 	DistanceToOrigin float64
 	Normale          Vector
-	Ka, Kd, Ks       Col
-	A                float64
+	Material
 }
 
 var NoIntersection = IntersectRes{}
