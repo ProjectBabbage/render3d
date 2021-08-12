@@ -75,9 +75,5 @@ func (t Triangle) Intersect(r Ray) IntersectRes {
 func (t *Triangle) RecomputeNormal() {
 	u := t.p2.Minus(t.p1)
 	v := t.p3.Minus(t.p1)
-	t.n = Vector{
-		u.Y*v.Z - u.Z*v.Y,
-		u.Z*v.X - u.X*v.Z,
-		u.X*v.Y - u.Y*v.X,
-	}.Normalize()
+	t.n = u.CrossProduct(v).Normalize()
 }

@@ -77,6 +77,14 @@ func (v1 Vector) Orthogonalize(v2 Vector) Vector {
 	return v1.Minus(v2.Dilate(v2.ProdScal(v1)))
 }
 
+func (v1 Vector) CrossProduct(v2 Vector) Vector {
+	return Vector{
+		v1.Y*v2.Z - v1.Z*v2.Y,
+		v1.Z*v2.X - v1.X*v2.Z,
+		v1.X*v2.Y - v1.Y*v2.X,
+	}
+}
+
 func (v Vector) Print() {
 	fmt.Println(v)
 }

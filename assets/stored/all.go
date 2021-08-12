@@ -31,8 +31,10 @@ var c = IsoCol(1)
 
 var mat0 = Material{
 	A:  1,
-	Ka: c, Kd: c, Ks: c, Kr: IsoCol(150),
+	N2: 1.3,
+	Ka: c, Kd: c, Ks: c, Kr: IsoCol(10), Kra: IsoCol(100),
 }
+
 var matSphere = Material{
 	A:  30,
 	Ka: c, Kd: c, Ks: c, Kr: IsoCol(150),
@@ -274,7 +276,7 @@ func STrueSphereInside() (Scene, Config) {
 func STrueSpherePlane() (Scene, Config) {
 	conf := NewConfig(Config{
 		Msaa:       4,
-		MaxBounces: 100,
+		MaxBounces: 4,
 	})
 
 	s := NewSphere(Vector{}, 1, mat0)
