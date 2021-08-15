@@ -84,7 +84,7 @@ func Cast(r Ray, scene Scene, maxBounces int) Col {
 		// compute the reflected ray
 		reflected_ray := NewRay(p.Add(reflected_direction.Dilate(Eps)), reflected_direction)
 
-		intensity = intensity.AddColor(Cast(reflected_ray, scene, maxBounces-1).PropDilateColor(iR.Material.Kr))
+		intensity = intensity.AddColor(Cast(reflected_ray, scene, maxBounces-1).DilateColorByChannels(iR.Material.Kr))
 	}
 
 	n1 := 1.0 // first environment is supposed to be air
@@ -100,7 +100,7 @@ func Cast(r Ray, scene Scene, maxBounces int) Col {
 
 		refracted_ray := NewRay(p.Add(refracted_direction.Dilate(Eps)), refracted_direction)
 
-		intensity = intensity.AddColor(Cast(refracted_ray, scene, maxBounces-1).PropDilateColor(iR.Material.Kra))
+		intensity = intensity.AddColor(Cast(refracted_ray, scene, maxBounces-1).DilateColorByChannels(iR.Material.Kra))
 	}
 
 	return intensity
