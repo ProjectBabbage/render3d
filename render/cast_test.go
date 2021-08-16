@@ -3,6 +3,7 @@ package render
 
 import (
 	. "broengine/datatypes"
+	"fmt"
 	"testing"
 )
 
@@ -35,6 +36,7 @@ func TestCast(t *testing.T) {
 	scene.AddLights(light)
 
 	c := Cast(ray, scene, 2)
+	fmt.Println(c)
 	if c == (Col{}) {
 		t.Error("Cast should return a non zero Col.")
 	}
@@ -55,6 +57,6 @@ func TestComputeIntensity(t *testing.T) {
 
 	col := compute_intensity(iR, ray, scene)
 	if col.R < 10 || col.G < 10 || col.B < 10 {
-		t.Errorf("Color col (%d) is incorrect", col)
+		t.Errorf("Color col (%v) is incorrect", col)
 	}
 }

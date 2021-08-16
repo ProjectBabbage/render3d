@@ -67,19 +67,43 @@ func compute_intensity(iR IntersectRes, r Ray, scene Scene) Col {
 // Cast a ray in the scene, return its intensity.
 func Cast(r Ray, scene Scene, maxBounces int) Col {
 	iR := scene.Intersect(r)
+
 	if !iR.HasIntersection || maxBounces == 0 {
 		return Col{}
 	}
+
 	intensity := compute_intensity(iR, r, scene)
-	// compute the reflected ray
+
 	p := iR.Vector
 	n := iR.Normale
+	negative_n := Vector{}.Minus(n)
 	v := r.Direction()
 	reflected_direction := v.Minus(n.Dilate(2 * v.ProdScal(n)))
-	reflected_ray := NewRay(p.Add(reflected_direction.Dilate(Eps)), reflected_direction)
-	// TODO compute the refracted ray
 
-	return intensity.AddColor(Cast(reflected_ray, scene, maxBounces-1).PropDilateColor(iR.Material.Kr))
+	if iR.Material.Kr != (Col{}) {
+		// compute the reflected ray
+		reflected_ray := NewRay(p.Add(reflected_direction.Dilate(Eps)), reflected_direction)
+
+		intensity = intensity.AddColor(Cast(reflected_ray, scene, maxBounces-1).DilateColorByChannels(iR.Material.Kr))
+	}
+
+	n1 := 1.0 // first environment is supposed to be air
+	n2 := iR.Material.N2
+
+	if iR.Material.Kra != (Col{}) && n2 != 0 {
+		// compute the refracted ray
+
+		refracted_direction := n.CrossProduct(negative_n.CrossProduct(v)).Dilate(n1 / n2).
+			Minus(n.Dilate(math.Sqrt(1 - (n1/n2)*n.CrossProduct(v).ProdScal(n.CrossProduct(reflected_direction)))))
+
+		// fmt.Println(p, refracted_direction, n2)
+
+		refracted_ray := NewRay(p.Add(refracted_direction.Dilate(Eps)), refracted_direction)
+
+		intensity = intensity.AddColor(Cast(refracted_ray, scene, maxBounces-1).DilateColorByChannels(iR.Material.Kra))
+	}
+
+	return intensity
 }
 
 func CastWorker(i1, i2 int, screen *Screen, scene Scene, conf Config, wg *sync.WaitGroup) {

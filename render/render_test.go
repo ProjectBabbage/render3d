@@ -74,21 +74,3 @@ func BenchmarkCastSphere(b *testing.B) {
 		Cast(r, scene, 1)
 	}
 }
-
-// ~ 0.3 ms/op
-func BenchmarkCastTrueSphere(b *testing.B) {
-	scene, _ := STrueSphere()
-	r := NewRay(Vector{}, Vector{})
-
-	for i := 0; i < b.N; i++ {
-		Cast(r, scene, 1)
-	}
-}
-
-// ~ 5 s for 500x500 px
-func BenchmarkCastAllSpherePlane(b *testing.B) {
-	scene, conf := STwoSpheresOnePlane()
-	for i := 0; i < b.N; i++ {
-		CastAll(scene, conf)
-	}
-}

@@ -50,7 +50,7 @@ func TestMeanScreenSize(t *testing.T) {
 	}
 }
 
-// intensity is an int
+// intensity is a Col
 func TestMeanScreenIntensity(t *testing.T) {
 	ns := NewScreen(2, 2)
 	ns.Pixels = [][]Col{
@@ -59,7 +59,7 @@ func TestMeanScreenIntensity(t *testing.T) {
 	}
 
 	ms := ns.MeanScreen(2)
-	expected_col1 := Col{1, 1, 1}
+	expected_col1 := Col{1.25, 1.25, 1.25}
 
 	if ms.Pixels[0][0] != expected_col1 {
 		t.Error("Color mean should be ", expected_col1, "instead it was:", ms.Pixels[0][0])
