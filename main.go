@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	Render(SRefractionExperiment())
-	// Render(STrueSpherePlane())
+	// Render(SRefractionExperiment())
+	Render(SFinal())
 }

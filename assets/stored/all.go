@@ -22,11 +22,6 @@ var paperMat = Material{
 	Ka: IsoCol(5), Kd: IsoCol(5), Ks: IsoCol(1),
 }
 
-var LightLeftBehind = Light{
-	Vector{-10, 0, -1},
-	IsoCol(25), IsoCol(25), IsoCol(25),
-}
-
 var FilesPath = "assets/stl/files/"
 
 func STrueSpherePlane() (Scene, Config) {
