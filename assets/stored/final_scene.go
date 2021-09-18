@@ -5,7 +5,24 @@ import (
 	"broengine/assets/stl"
 	. "broengine/config"
 	. "broengine/datatypes"
+	"fmt"
+	"os"
+	"path"
 )
+
+// FILEPATH RESOLUTION
+func get_assets_files_path() string {
+	fp, _ := os.Getwd()
+	base := path.Base(fp)
+	// in case the working directory is not the root of the project
+	// but from a direct subdirectory
+	if base != "broengine" {
+		fp = path.Dir(fp) // path/broengine/subdirectory becomes path/broengine
+	}
+	return fmt.Sprintf("%s/assets/stl/files/", fp)
+}
+
+var FilesPath = get_assets_files_path()
 
 // LIGHTS
 var LightLeftBehind = Light{

@@ -86,14 +86,15 @@ func RenderScene(scene datatypes.Scene, conf Config) {
 	RenderScreen(&screen, conf)
 }
 
+// save the Screen s as a PNG file as output/rendered.png
 func SaveImageAsPNG(s Screen) {
-	fmt.Print("Starting to write output/rendered.png")
+	fmt.Print("Starting to write output/rendered.png ")
 	outputImg := image.NewRGBA(
 		image.Rect(0, 0, s.PixelsX, s.PixelsY),
 	)
 	for i := 0; i < s.PixelsX; i++ {
 		if i%70 == 0 {
-			fmt.Print(".")
+			fmt.Print(".") // show a progression
 		}
 		for j := 0; j < s.PixelsY; j++ {
 			outputImg.SetRGBA(i, j, s.Pixels[i][j].ColorRGBA())

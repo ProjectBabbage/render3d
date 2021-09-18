@@ -10,7 +10,7 @@ import (
 
 // Get the Triangles from a .stl file, and give them the same Material mat
 func Parse(filepath string, mat Material) Object {
-
+	fmt.Println("Using", filepath)
 	s, err := stl.ReadFile(filepath)
 	if err != nil {
 		fmt.Println(err)

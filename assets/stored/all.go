@@ -22,8 +22,6 @@ var paperMat = Material{
 	Ka: IsoCol(5), Kd: IsoCol(5), Ks: IsoCol(1),
 }
 
-var FilesPath = "assets/stl/files/"
-
 func STrueSpherePlane() (Scene, Config) {
 	conf := NewConfig(Config{
 		Msaa:       4,
