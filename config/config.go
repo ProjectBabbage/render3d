@@ -19,6 +19,8 @@ type Config struct {
 	PixelsX, PixelsY int
 	// Reflection and Refraction bounce limit
 	MaxBounces int
+	// Whether or not to save the render as a png in output/
+	SaveAsPNG bool
 }
 
 // Create a default config, overriding default config fields with
@@ -31,20 +33,17 @@ func NewConfig(override_conf Config) Config {
 	)
 
 	config := Config{
-		RenderBackend: "cpu",
-		Msaa:          1,
+		Msaa: 1,
 		// Eye is at origin
 		Eye:     Vector{X: 0, Y: 0, Z: 0},
 		D:       2,
 		ScreenX: 1, ScreenY: 1,
 		PixelsX: PixelsX, PixelsY: PixelsY,
 		MaxBounces: 2,
+		SaveAsPNG:  false,
 	}
 
 	// TODO there must be a cleaner way to do this:
-	if override_conf.RenderBackend != "" {
-		config.RenderBackend = override_conf.RenderBackend
-	}
 	if override_conf.Eye.X != 0 && override_conf.Eye.Y != 0 && override_conf.Eye.Z != 0 {
 		config.Eye = override_conf.Eye
 	}
@@ -70,6 +69,9 @@ func NewConfig(override_conf Config) Config {
 	}
 	if override_conf.MaxBounces != 0 {
 		config.MaxBounces = override_conf.MaxBounces
+	}
+	if override_conf.SaveAsPNG != config.SaveAsPNG {
+		config.SaveAsPNG = override_conf.SaveAsPNG
 	}
 
 	return config

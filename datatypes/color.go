@@ -1,5 +1,7 @@
 package datatypes
 
+import "image/color"
+
 type Col struct {
 	R, G, B float64
 }
@@ -66,4 +68,14 @@ func (c Col) RGBA() (r, g, b, a uint32) {
 	b |= b << 8
 	a = 255
 	return
+}
+
+func (c Col) ColorRGBA() color.RGBA {
+	r, g, b, a := c.RGBA()
+	return color.RGBA{
+		R: uint8(r),
+		G: uint8(g),
+		B: uint8(b),
+		A: uint8(a),
+	}
 }

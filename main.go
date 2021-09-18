@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	// Render(SRefractionExperiment())
-	Render(SFinal())
+	// RenderScene(SRefractionExperiment())
+	RenderScene(SFinal())
 }

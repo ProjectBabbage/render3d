@@ -14,7 +14,7 @@ func Parse(filepath string, mat Material) Object {
 	s, err := stl.ReadFile(filepath)
 	if err != nil {
 		fmt.Println(err)
-		log.Fatalf("Error when parsing the stl file %s", filepath)
+		log.Fatalf("(From us) Error when parsing the stl file %s", filepath)
 	}
 	var triangles []Surface = make([]Surface, len(s.Triangles))
 	for i := 0; i < len(s.Triangles); i++ {

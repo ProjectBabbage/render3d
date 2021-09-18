@@ -83,10 +83,9 @@ var conf = NewConfig(Config{
 	Msaa:       3,
 	MaxBounces: 10,
 	ScreenX:    1.5,
-	PixelsX:    750,
-	PixelsY:    500,
-	// PixelsX:    750 * 2,
-	// PixelsY:    500 * 2,
+	PixelsX:    750 * 3,
+	PixelsY:    500 * 3,
+	SaveAsPNG:  true,
 })
 
 // The scene moves all the OBJECTS at the right position
