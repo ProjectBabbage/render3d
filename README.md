@@ -13,7 +13,7 @@ Same system as SDL.
     o -- + X
     |
     +
-    Y 
+    Y
 
 Z follows the right hand rule (goes up from your eyes to the screen)
 
