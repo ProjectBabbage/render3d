@@ -1,8 +1,9 @@
 // put the scene we want to print on a poster here :)
-package stored
+package dota
 
 import (
 	"broengine/assets/stl"
+	. "broengine/assets/stored"
 	. "broengine/config"
 	. "broengine/datatypes"
 )
@@ -64,18 +65,19 @@ var lall_objects = []Object{
 }
 
 // CONFIG
+var multiply_resolution = 0.5
 var lconf = NewConfig(Config{
 	D:          2, // screen Z distance to the Eye at (0,0,0)
 	Msaa:       3,
 	MaxBounces: 2,
-	ScreenX:    1.5,
-	PixelsX:    300 * 2,
-	PixelsY:    200 * 2,
+	ScreenX:    1920. / 1080.,
+	PixelsX:    int(1920 * multiply_resolution),
+	PixelsY:    int(1080 * multiply_resolution),
 	SaveAsPNG:  true,
 })
 
 // The scene moves all the OBJECTS at the right position
-func lSFinal() (Scene, Config) {
+func SDota() (Scene, Config) {
 	paved.Dilate(4.5)
 	paved.Translate(Vector{0, 0, 20})
 
@@ -111,5 +113,5 @@ func lSFinal() (Scene, Config) {
 	scene.AddObjects(lall_objects...)
 	scene.AddLights(OneMoreLight)
 
-	return scene, conf
+	return scene, lconf
 }
