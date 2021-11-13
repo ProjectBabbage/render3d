@@ -2,7 +2,7 @@
 
 3D Rendering from scratch.
 
-## Result exemple
+## Result example
 
 ![img](assets/img/FinalScene.png)
 
