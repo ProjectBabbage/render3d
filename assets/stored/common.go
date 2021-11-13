@@ -23,7 +23,7 @@ var FilesPath = get_assets_files_path()
 
 // LIGHTS
 var LightLeftBehind = Light{
-	Vector{-10, -10, -10},
+	Vector{-10, -15, -10},
 	IsoCol(1), IsoCol(1), IsoCol(1),
 }
 
@@ -33,7 +33,7 @@ var special_blue = Col{R: 94, G: 94, B: 249}
 
 var SPECIAL_RED_DIFFUSE = Material{
 	A:  20,
-	Ka: special_red.DilateColor(0.15),
+	Ka: special_red.DilateColor(0.10),
 	Kd: special_red.DilateColor(0.6),
 	Ks: special_red.DilateColor(0.3),
 }
@@ -48,8 +48,10 @@ var SPECIAL_BLUE_DIFFUSE = Material{
 // MATERIAL
 var WHITE_DIFFUSE_MEDIUM = Material{
 	A:  1,
-	Ka: IsoCol(20), Kd: IsoCol(150),
+	Ka: IsoCol(10), Kd: IsoCol(180), Ks: IsoCol(10),
 }
+
+var BLACK_DIFFUSE = Material{}
 
 var GLASS = Material{
 	N2:  1.524, // indice de réfraction du verre
