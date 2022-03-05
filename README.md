@@ -2,7 +2,7 @@
 
 The idea for this edition was to build a 3D renderer to understand the important concepts in this field.
 We only used CPU power so the rendering is not expected to be time efficient: it was not the goal anyway.
-Look at that beautiful red glass material below !
+Look at that beautiful red and glass material below !
 
 ## Result example
 
