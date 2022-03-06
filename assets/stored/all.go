@@ -1,9 +1,9 @@
 package stored
 
 import (
-	"broengine/assets/stl"
-	. "broengine/config"
-	. "broengine/datatypes"
+	"render3d/assets/stl"
+	. "render3d/config"
+	. "render3d/datatypes"
 )
 
 var mat0 = Material{

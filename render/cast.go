@@ -2,8 +2,8 @@
 package render
 
 import (
-	. "broengine/config"
-	. "broengine/datatypes"
+	. "render3d/config"
+	. "render3d/datatypes"
 	"math"
 	"runtime"
 	"sync"

@@ -2,10 +2,10 @@
 package stored
 
 import (
-	"broengine/assets/stl"
-	. "broengine/assets/stored"
-	. "broengine/config"
-	. "broengine/datatypes"
+	"render3d/assets/stl"
+	. "render3d/assets/stored"
+	. "render3d/config"
+	. "render3d/datatypes"
 )
 
 // LIGHTS

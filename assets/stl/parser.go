@@ -1,7 +1,7 @@
 package stl
 
 import (
-	. "broengine/datatypes"
+	. "render3d/datatypes"
 	"fmt"
 	"log"
 

@@ -2,7 +2,7 @@
 package render
 
 import (
-	. "broengine/datatypes"
+	. "render3d/datatypes"
 	"fmt"
 	"testing"
 )

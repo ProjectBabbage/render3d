@@ -1,7 +1,7 @@
 package render
 
 import (
-	"broengine/datatypes"
+	"render3d/datatypes"
 )
 
 // Contains the screen pixels (matrice of color)

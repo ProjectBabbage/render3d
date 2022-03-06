@@ -1,7 +1,7 @@
 package config
 
 import (
-	. "broengine/datatypes"
+	. "render3d/datatypes"
 )
 
 type Config struct {

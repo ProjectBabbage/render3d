@@ -1,7 +1,7 @@
 package stored
 
 import (
-	. "broengine/datatypes"
+	. "render3d/datatypes"
 	"fmt"
 	"os"
 	"path"
@@ -13,8 +13,8 @@ func get_assets_files_path() string {
 	base := path.Base(fp)
 	// in case the working directory is not the root of the project
 	// but from a direct subdirectory
-	if base != "broengine" {
-		fp = path.Dir(fp) // path/broengine/subdirectory becomes path/broengine
+	if base != "render3d" {
+		fp = path.Dir(fp) // path/render3d/subdirectory becomes path/render3d
 	}
 	return fmt.Sprintf("%s/assets/stl/files/", fp)
 }

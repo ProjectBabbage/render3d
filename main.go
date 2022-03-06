@@ -1,11 +1,12 @@
 package main
 
 import (
-	. "broengine/assets/stored/final"
-	. "broengine/render"
+	// . "render3d/assets/stored/dota"
+	. "render3d/assets/stored/final"
+	. "render3d/render"
 )
 
 func main() {
-	// RenderScene(SDota()) // import broengine/assets/stored/dota
-	RenderScene(SFinal()) // import broengine/assets/stored/final
+	// RenderScene(SDota()) // import render3d/assets/stored/dota
+	RenderScene(SFinal()) // import render3d/assets/stored/final
 }

@@ -1,9 +1,9 @@
 package render
 
 import (
-	. "broengine/assets/stored"
-	. "broengine/config"
-	. "broengine/datatypes"
+	. "render3d/assets/stored"
+	. "render3d/config"
+	. "render3d/datatypes"
 	"testing"
 )
 

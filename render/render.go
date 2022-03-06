@@ -1,8 +1,8 @@
 package render
 
 import (
-	. "broengine/config"
-	"broengine/datatypes"
+	. "render3d/config"
+	"render3d/datatypes"
 	"fmt"
 	"image"
 	"image/png"
@@ -86,9 +86,9 @@ func RenderScene(scene datatypes.Scene, conf Config) {
 	RenderScreen(&screen, conf)
 }
 
-// save the Screen s as a PNG file as output/rendered.png
+// save the Screen s as a PNG file as render3d.png
 func SaveImageAsPNG(s Screen) {
-	fmt.Print("Starting to write output/rendered.png ")
+	fmt.Print("Starting to write render3d.png ")
 	outputImg := image.NewRGBA(
 		image.Rect(0, 0, s.PixelsX, s.PixelsY),
 	)
@@ -100,8 +100,8 @@ func SaveImageAsPNG(s Screen) {
 			outputImg.SetRGBA(i, j, s.Pixels[i][j].ColorRGBA())
 		}
 	}
-	os.Remove("output/rendered.png")
-	out, _ := os.Create("output/rendered.png")
+	os.Remove("render3d.png")
+	out, _ := os.Create("render3d.png")
 	png.Encode(out, outputImg)
 	out.Close()
 	fmt.Print(" done !")
