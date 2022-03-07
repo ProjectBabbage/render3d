@@ -1,7 +1,9 @@
 # render3d, Project Babbage first edition.
 
 The idea for this edition was to build a 3D renderer to understand important concepts in this field.
+
 Our ray tracing algorithm implementation relies on CPU power so the rendering is not expected to be time efficient at this stage.
+
 Take a look at those beautiful colors and at that beautiful glass material below!
 
 ## Result example
@@ -34,6 +36,14 @@ Do `go run main.go`
 
 You can change the current scene in `main.go`.
 
+## Scene configuration
+
+Check the default config at `config/config.go`.
+
+The screen is at D (+Z axis) from the eye (`D=2` in the default config).
+Hence you need to put the object after `Z=2` to see it on the rendered image.
+
+`SaveAsPNG` is `false` by default. Set to `true` to save the rendered image to `render3d.png`.
 
 ## Testing
 
@@ -48,13 +58,6 @@ Run a specific test (here called TestNewScreen):
 `go test -run TestNewScreen render3d/render`
 
 you must specify the package it's in (render3d/render)
-
-## Scene configuration
-
-Check the default config at config/config.go.
-The screen is at D (+Z axis) from the eye (`D=2` in the default config).
-Hence you need to put the object after `Z=2` to see it on the rendered image.
-SaveAsPNG is at false by default. Set to true to save the rendered image to output/rendered.png.
 
 ## Documentation
 
