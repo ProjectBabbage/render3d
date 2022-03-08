@@ -14,9 +14,9 @@ Take a look at those beautiful colors and at that beautiful glass material below
 
 ### On Debian based distributions
 
-Install golang, then:
+Do
 ```
-sudo apt install libsdl2-2.0-0 libsdl2-dev
+sudo apt install golang libsdl2-dev
 
 go install
 ```
@@ -26,6 +26,8 @@ go install
 Do
 ```
 sudo pacman -Syu --needed go sdl2
+
+go get github.com/veandco/go-sdl2@latest
 
 go install
 ```
