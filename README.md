@@ -38,6 +38,8 @@ Do `go run main.go`
 
 You can change the current scene in `main.go`.
 
+The first time you run it, it may take some time to load SDL2.
+
 ## Scene configuration
 
 Check the default config at `config/config.go`.

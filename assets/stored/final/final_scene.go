@@ -68,14 +68,14 @@ var all_objects = []Object{
 }
 
 // CONFIG
-var multiply_resolution = 1
+var multiply_resolution = 0.5
 var conf = NewConfig(Config{
 	D:          2, // screen Z distance to the Eye at (0,0,0)
 	Msaa:       3,
 	MaxBounces: 5,
 	ScreenX:    1920. / 1080.,
-	PixelsX:    1920 * multiply_resolution,
-	PixelsY:    1080 * multiply_resolution,
+	PixelsX:    int(1920 * multiply_resolution),
+	PixelsY:    int(1080 * multiply_resolution),
 	SaveAsPNG:  true,
 })
 

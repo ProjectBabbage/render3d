@@ -1,3 +1,6 @@
 output/*
 render3d
 render3d.png
+
+# debugging
+__debug_bin
